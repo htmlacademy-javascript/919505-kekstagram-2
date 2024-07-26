@@ -31,10 +31,6 @@ function convertStringToNumber (str) {
     }
   }
 
-  if (!result) {
-    return NaN;
-  }
-
   return parseInt(result, 10);
 }
 
