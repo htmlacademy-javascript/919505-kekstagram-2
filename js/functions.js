@@ -10,10 +10,10 @@ const convertTimeToMinutes = (time) => {
 const isMeetingValid = (dayStart, dayEnd, meetingStart, meetingDuration) => {
   const start = convertTimeToMinutes(dayStart);
   const end = convertTimeToMinutes(dayEnd);
-  const meeting = convertTimeToMinutes(meetingStart) + meetingDuration;
+  const meeting = convertTimeToMinutes(meetingStart);
 
   // eslint-disable-next-line no-console
-  console.log(start <= meeting && meeting <= end);
+  console.log(start <= meeting && (meeting + meetingDuration) <= end);
 };
 
 isMeetingValid('08:00', '17:30', '14:00', 90); // true
