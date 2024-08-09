@@ -1,4 +1,4 @@
-import {initPhotos} from './photos';
+import {initPhotos} from './photos.js';
 
 const photos = initPhotos();
 
