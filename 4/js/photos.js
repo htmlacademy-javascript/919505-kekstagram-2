@@ -1,6 +1,6 @@
-import {photoMockData} from './mocks';
-import {createComments} from './comments';
-import {generateUniqueIDs, getRandomArrayElement, getRandomIntegerFromRange} from './utils';
+import {photoMockData} from './mocks.js';
+import {createComments} from './comments.js';
+import {generateUniqueIDs, getRandomArrayElement, getRandomIntegerFromRange} from './utils.js';
 
 const {photoIDs, likesQuantity, photoDescriptions} = photoMockData;
 
