@@ -1,5 +1,5 @@
-import {generatePhotosData} from './data/photos';
-import {renderPhotoList} from './components/photo-list';
+import {generatePhotosData} from './data/photos.js';
+import {renderPhotoList} from './components/photo-list.js';
 
 const photosData = generatePhotosData();
 

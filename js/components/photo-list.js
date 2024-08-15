@@ -1,4 +1,4 @@
-import {createPhoto} from './photo-item';
+import {createPhoto} from './photo-item.js';
 
 const picturesListElement = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
