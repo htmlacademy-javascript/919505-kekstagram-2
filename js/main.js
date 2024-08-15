@@ -1,6 +1,6 @@
-import {initPhotos} from './photos.js';
+import {generatePhotosData} from './data/photos';
+import {renderPhotoList} from './components/photo-list';
 
-const photos = initPhotos();
+const photosData = generatePhotosData();
 
-// eslint-disable-next-line no-console
-console.log(photos);
+renderPhotoList(photosData);
