@@ -1,5 +1,5 @@
 import {commentsMockData} from './mocks.js';
-import {generateUniqueIDs, getRandomArrayElement, getRandomIntegerFromRange} from './utils.js';
+import {generateUniqueIDs, getRandomArrayElement, getRandomIntegerFromRange} from '../utils.js';
 
 const {commentIDs, avatarIDs, messageQuantity, messageSentences, messages, names} = commentsMockData;
 const commentIDGenerator = generateUniqueIDs(commentIDs.min, commentIDs.max);
@@ -25,7 +25,7 @@ const createMessage = () => {
   return result.join(' ');
 };
 
-export const createComments = () => {
+export const generateCommentsData = () => {
   const result = [];
   const commentsQuantity = getRandomIntegerFromRange(messageQuantity.min, messageQuantity.max);
 

@@ -1,18 +1,18 @@
 import {photoMockData} from './mocks.js';
-import {createComments} from './comments.js';
-import {generateUniqueIDs, getRandomArrayElement, getRandomIntegerFromRange} from './utils.js';
+import {generateCommentsData} from './comments.js';
+import {generateUniqueIDs, getRandomArrayElement, getRandomIntegerFromRange} from '../utils.js';
 
 const {photoIDs, likesQuantity, photoDescriptions} = photoMockData;
 
 const photoIDGenerator = generateUniqueIDs(photoIDs.min, photoIDs.max);
 const photoURLGenerator = generateUniqueIDs(photoIDs.min, photoIDs.max);
 
-const createPhoto = () => ({
+const createPhotoData = () => ({
   id: photoIDGenerator(),
   url: `photos/${photoURLGenerator()}.jpg`,
   description: getRandomArrayElement(photoDescriptions),
   likes: getRandomIntegerFromRange(likesQuantity.min, likesQuantity.max),
-  comments: createComments()
+  comments: generateCommentsData()
 });
 
-export const initPhotos = () => Array.from({length: photoIDs.max}, createPhoto);
+export const generatePhotosData = () => Array.from({length: photoIDs.max}, createPhotoData);
