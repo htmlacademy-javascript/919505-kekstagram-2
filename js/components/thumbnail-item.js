@@ -1,12 +1,6 @@
 const photoTemplate = document.querySelector('#picture').content;
 
-export const initThumbnail = (thumbnail, callback) => {
-  thumbnail.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    callback(thumbnail);
-  });
-};
-
+// Создает превьюшку для последующего рендера
 export const createThumbnail = (data) => {
   const {url, description, likes, comments} = data;
 
@@ -17,4 +11,16 @@ export const createThumbnail = (data) => {
   newThumbnail.querySelector('.picture__comments').textContent = comments.length;
 
   return newThumbnail;
+};
+
+// Оживляет отрендеренную превьюшку
+export const initThumbnail = (thumbnail, callback) => {
+  const url = thumbnail.querySelector('.picture__img').src;
+  const likes = thumbnail.querySelector('.picture__likes').textContent;
+  const totalCommentsCount = thumbnail.querySelector('.picture__comments').textContent;
+
+  thumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    callback({url, likes, totalCommentsCount});
+  });
 };
