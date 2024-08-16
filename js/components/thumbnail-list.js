@@ -1,11 +1,11 @@
-import {createPhoto} from './photo-item';
+import {createThumbnail} from './thumbnail-item.js';
 
 const picturesListElement = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
-export const renderPhotoList = (data) => {
+export const renderThumbnailList = (data) => {
   data.forEach((entity) => {
-    const newPhoto = createPhoto(entity);
+    const newPhoto = createThumbnail(entity);
     fragment.appendChild(newPhoto);
   });
 

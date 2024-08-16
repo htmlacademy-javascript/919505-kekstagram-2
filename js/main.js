@@ -1,6 +1,6 @@
-import {generatePhotosData} from './data/photos';
-import {renderPhotoList} from './components/photo-list';
+import {generatePhotosData} from './data/photos.js';
+import {renderThumbnailList} from './components/thumbnail-list.js';
 
 const photosData = generatePhotosData();
 
-renderPhotoList(photosData);
+renderThumbnailList(photosData);
