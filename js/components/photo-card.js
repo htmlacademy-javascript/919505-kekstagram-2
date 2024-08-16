@@ -11,7 +11,7 @@ const updateCardContent = (cardData) => {
   photoCard.querySelector('.social__comment-total-count').textContent = totalCommentsCount;
 };
 
-const closePhotoCardHandler = () => {
+const closeButtonHandler = () => {
   closePhotoCard();
 };
 
@@ -21,9 +21,10 @@ const keydownHandler = (evt) => {
   }
 };
 
+// Функция не стрелочная, потому что нужен хойстинг
 function closePhotoCard () {
   document.removeEventListener('keydown', keydownHandler);
-  closeButton.removeEventListener('click', closePhotoCardHandler);
+  closeButton.removeEventListener('click', closeButtonHandler);
 
   photoCard.classList.add('hidden');
 }
@@ -33,6 +34,6 @@ export const openPhotoCard = (cardData) => {
 
   photoCard.classList.remove('hidden');
 
-  closeButton.addEventListener('click', closePhotoCardHandler);
+  closeButton.addEventListener('click', closeButtonHandler);
   document.addEventListener('keydown', keydownHandler);
 };
