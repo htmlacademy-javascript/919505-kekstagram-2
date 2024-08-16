@@ -1,5 +1,12 @@
 const photoTemplate = document.querySelector('#picture').content;
 
+export const initThumbnail = (thumbnail, callback) => {
+  thumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    callback(thumbnail);
+  });
+};
+
 export const createThumbnail = (data) => {
   const {url, description, likes, comments} = data;
 
