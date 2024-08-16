@@ -1,10 +1,10 @@
-const photoTemplate = document.querySelector('#picture').content;
+const thumbnailTemplate = document.querySelector('#picture').content;
 
 // Создает превьюшку для последующего рендера
 export const createThumbnail = (data) => {
   const {url, description, likes, comments} = data;
 
-  const newThumbnail = photoTemplate.cloneNode(true);
+  const newThumbnail = thumbnailTemplate.cloneNode(true);
   newThumbnail.querySelector('.picture__img').src = url;
   newThumbnail.querySelector('.picture__img').alt = description;
   newThumbnail.querySelector('.picture__likes').textContent = likes;
