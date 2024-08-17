@@ -12,4 +12,4 @@ renderThumbnailList(photosData);
 // Оживляем отрендеренные превьюшки
 // В данном случае это будет вызов коллбэка openPhotoCard при клике на превьюшку
 const thumbnails = document.querySelectorAll('.picture');
-thumbnails.forEach((thumbnail) => initThumbnail(thumbnail, openPhotoCard));
+thumbnails.forEach((thumbnail, i) => initThumbnail(thumbnail, photosData[i], openPhotoCard));

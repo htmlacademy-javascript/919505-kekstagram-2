@@ -1,14 +1,26 @@
+import {updateComments} from './comments.js';
 import {KeyCode} from '../const.js';
 
 const photoCard = document.querySelector('.big-picture');
 const closeButton = photoCard.querySelector('.big-picture__cancel');
 
-const updateCardContent = (cardData) => {
-  const {url, likes, totalCommentsCount} = cardData;
+const updateCardContent = (data) => {
+  const {url, likes, description, comments} = data;
 
-  photoCard.querySelector('.big-picture__img img').src = url;
-  photoCard.querySelector('.likes-count').textContent = likes;
-  photoCard.querySelector('.social__comment-total-count').textContent = totalCommentsCount;
+  const imgElement = photoCard.querySelector('.big-picture__img img');
+  const likesElement = photoCard.querySelector('.likes-count');
+  const descriptionElement = photoCard.querySelector('.social__caption');
+  const shownCommentsElement = photoCard.querySelector('.social__comment-shown-count');
+  const totalCommentsElement = photoCard.querySelector('.social__comment-total-count');
+
+  imgElement.src = url;
+  imgElement.alt = description;
+  likesElement.textContent = likes;
+  descriptionElement.textContent = description;
+  shownCommentsElement.textContent = comments.length.toString();
+  totalCommentsElement.textContent = comments.length.toString();
+
+  updateComments(comments);
 };
 
 const closeButtonHandler = () => {
@@ -23,17 +35,23 @@ const keydownHandler = (evt) => {
 
 // Функция не стрелочная, потому что нужен хойстинг
 function closePhotoCard () {
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', keydownHandler);
   closeButton.removeEventListener('click', closeButtonHandler);
 
   photoCard.classList.add('hidden');
 }
 
-export const openPhotoCard = (cardData) => {
-  updateCardContent(cardData);
+export const openPhotoCard = (data) => {
+  updateCardContent(data);
 
   photoCard.classList.remove('hidden');
 
   closeButton.addEventListener('click', closeButtonHandler);
   document.addEventListener('keydown', keydownHandler);
+  document.body.classList.add('modal-open');
+
+  // Временно скрываем блоки счетчика и загрузки комментариев
+  photoCard.querySelector('.social__comment-count').classList.add('hidden');
+  photoCard.querySelector('.comments-loader').classList.add('hidden');
 };
