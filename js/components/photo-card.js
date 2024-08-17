@@ -3,15 +3,14 @@ import {KeyCode} from '../const.js';
 
 const photoCard = document.querySelector('.big-picture');
 const closeButton = photoCard.querySelector('.big-picture__cancel');
+const imgElement = photoCard.querySelector('.big-picture__img img');
+const likesElement = photoCard.querySelector('.likes-count');
+const descriptionElement = photoCard.querySelector('.social__caption');
+const shownCommentsElement = photoCard.querySelector('.social__comment-shown-count');
+const totalCommentsElement = photoCard.querySelector('.social__comment-total-count');
 
 const updateCardContent = (data) => {
   const {url, likes, description, comments} = data;
-
-  const imgElement = photoCard.querySelector('.big-picture__img img');
-  const likesElement = photoCard.querySelector('.likes-count');
-  const descriptionElement = photoCard.querySelector('.social__caption');
-  const shownCommentsElement = photoCard.querySelector('.social__comment-shown-count');
-  const totalCommentsElement = photoCard.querySelector('.social__comment-total-count');
 
   imgElement.src = url;
   imgElement.alt = description;
