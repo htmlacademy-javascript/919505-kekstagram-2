@@ -1,26 +1,26 @@
-const photoTemplate = document.querySelector('#picture').content;
+const thumbnailTemplate = document.querySelector('#picture').content;
 
 // Создает превьюшку для последующего рендера
 export const createThumbnail = (data) => {
   const {url, description, likes, comments} = data;
 
-  const newThumbnail = photoTemplate.cloneNode(true);
-  newThumbnail.querySelector('.picture__img').src = url;
-  newThumbnail.querySelector('.picture__img').alt = description;
-  newThumbnail.querySelector('.picture__likes').textContent = likes;
-  newThumbnail.querySelector('.picture__comments').textContent = comments.length;
+  const newThumbnail = thumbnailTemplate.cloneNode(true);
+  const imgElement = newThumbnail.querySelector('.picture__img');
+  const likesElement = newThumbnail.querySelector('.picture__likes');
+  const commentsElement = newThumbnail.querySelector('.picture__comments');
+
+  imgElement.src = url;
+  imgElement.alt = description;
+  likesElement.textContent = likes;
+  commentsElement.textContent = comments.length;
 
   return newThumbnail;
 };
 
 // Оживляет отрендеренную превьюшку
-export const initThumbnail = (thumbnail, callback) => {
-  const url = thumbnail.querySelector('.picture__img').src;
-  const likes = thumbnail.querySelector('.picture__likes').textContent;
-  const totalCommentsCount = thumbnail.querySelector('.picture__comments').textContent;
-
+export const initThumbnail = (thumbnail, data, callback) => {
   thumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    callback({url, likes, totalCommentsCount});
+    callback(data);
   });
 };
