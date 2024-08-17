@@ -1,5 +1,6 @@
 const commentTemplate = document.querySelector('.social__comment').cloneNode(true);
 
+// Создает ноду комментария для последующего рендера
 const createComment = (data) => {
   const {avatar, name, message} = data;
 
@@ -14,6 +15,7 @@ const createComment = (data) => {
   return newComment;
 };
 
+// Создает фрагмент с комментариями
 const createCommentsFragment = (commentsData) => {
   const commentsFragment = document.createDocumentFragment();
 
@@ -25,6 +27,7 @@ const createCommentsFragment = (commentsData) => {
   return commentsFragment;
 };
 
+// Удаляет старые комментарии и добавляет фрагмент с новыми
 export const updateComments = (comments) => {
   const commentsListElement = document.querySelector('.social__comments');
   const commentsFragment = createCommentsFragment(comments);
