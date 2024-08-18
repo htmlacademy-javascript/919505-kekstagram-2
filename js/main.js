@@ -8,6 +8,6 @@ const photosData = generatePhotosData();
 // Рендерим превьюшки
 renderPreviews(photosData);
 
-// Оживляем превюшки через делегирование
+// Оживляем превьюшки через делегирование
 // Передаем коллбэк openPhotoCard, который будет вызываться при клике на список превьюшек
 initPreviewList(photosData, openPhotoCard);
