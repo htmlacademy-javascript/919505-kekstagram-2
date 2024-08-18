@@ -18,7 +18,7 @@ export const initPreviewList = (data, callback) => {
     const activePreview = evt.target.closest('.picture');
 
     if (activePreview) {
-      const activePreviewId = activePreview.dataset.userId;
+      const activePreviewId = activePreview.dataset.photoId;
       const activePreviewData = data.find((entity) => entity.id === Number(activePreviewId));
 
       callback(activePreviewData);

@@ -10,7 +10,7 @@ export const createPreview = (data) => {
   const likesElement = newPreview.querySelector('.picture__likes');
   const commentsElement = newPreview.querySelector('.picture__comments');
 
-  hrefElement.dataset.userId = id;
+  hrefElement.dataset.photoId = id;
   imgElement.src = url;
   imgElement.alt = description;
   likesElement.textContent = likes;
