@@ -1,24 +1,22 @@
-import {createCommentsFragment} from './comment-item';
+import {createComment} from './comment-item.js';
+import {updateCommentPanel} from './comment-panel.js';
 import {COMMENTS_STEP} from '../const.js';
 
-const commentsListElement = document.querySelector('.social__comments');
-const shownCommentsElement = document.querySelector('.social__comment-shown-count');
-const totalCommentsElement = document.querySelector('.social__comment-total-count');
 const commentsLoaderElement = document.querySelector('.comments-loader');
+const commentsListElement = document.querySelector('.social__comments');
 
 let commentsData = [];
 let currentShownComments = COMMENTS_STEP;
 
-// Обновляет число показанных комментариев,
-// прячет кнопку подгрузки комментариев, если больше показывать нечего
-const updateCommentPanel = () => {
-  if (currentShownComments >= commentsData.length) {
-    shownCommentsElement.textContent = commentsData.length.toString();
-    commentsLoaderElement.classList.add('hidden');
-  } else {
-    shownCommentsElement.textContent = currentShownComments.toString();
-    commentsLoaderElement.classList.remove('hidden');
-  }
+export const createCommentsFragment = (data) => {
+  const commentsFragment = document.createDocumentFragment();
+
+  data.forEach((comment) => {
+    const newComment = createComment(comment);
+    commentsFragment.appendChild(newComment);
+  });
+
+  return commentsFragment;
 };
 
 const removeComments = () => {
@@ -28,27 +26,29 @@ const removeComments = () => {
 
 const updateComments = (comments) => {
   const commentsFragment = createCommentsFragment(comments);
-  commentsListElement.appendChild(commentsFragment);
+  const areAllCommentsShown = currentShownComments >= commentsData.length;
 
-  updateCommentPanel();
+  updateCommentPanel(areAllCommentsShown, currentShownComments, commentsData.length);
+
+  areAllCommentsShown
+    ? commentsLoaderElement.classList.add('hidden')
+    : commentsLoaderElement.classList.remove('hidden');
+
+  commentsListElement.appendChild(commentsFragment);
 };
 
 const addCommentsHandler = () => {
   const previousShownComments = currentShownComments;
 
-  if (currentShownComments + COMMENTS_STEP > commentsData.length) {
-    currentShownComments = commentsData.length;
-  } else {
-    currentShownComments += COMMENTS_STEP;
-  }
+  currentShownComments + COMMENTS_STEP > commentsData.length
+    ? currentShownComments = commentsData.length
+    : currentShownComments += COMMENTS_STEP;
 
   updateComments(commentsData.slice(previousShownComments, currentShownComments));
 };
 
 export const initComments = (data) => {
   commentsData = data;
-
-  totalCommentsElement.textContent = commentsData.length.toString();
 
   removeComments();
   updateComments(commentsData.slice(0, COMMENTS_STEP));
@@ -60,4 +60,3 @@ export const closeComments = () => {
   commentsLoaderElement.removeEventListener('click', addCommentsHandler);
   removeComments();
 };
-
