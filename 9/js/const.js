@@ -1,3 +1,3 @@
 export const KeyCode = {
-  ESC: 27,
+  ESC: 'Escape',
 };
