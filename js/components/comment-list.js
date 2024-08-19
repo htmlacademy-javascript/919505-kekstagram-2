@@ -6,7 +6,7 @@ const commentsLoaderElement = document.querySelector('.comments-loader');
 const commentsListElement = document.querySelector('.social__comments');
 
 let commentsData = [];
-let currentShownComments = COMMENTS_STEP;
+let currentCommentsCount = 0;
 
 export const createCommentsFragment = (data) => {
   const commentsFragment = document.createDocumentFragment();
@@ -19,49 +19,35 @@ export const createCommentsFragment = (data) => {
   return commentsFragment;
 };
 
-const removeComments = () => {
-  currentShownComments = COMMENTS_STEP;
-  commentsListElement.innerHTML = '';
-};
-
-const updateComments = (comments) => {
+const addComments = (comments) => {
   const commentsFragment = createCommentsFragment(comments);
-  const areAllCommentsShown = currentShownComments >= commentsData.length;
-
-  updateCommentPanel(areAllCommentsShown, currentShownComments, commentsData.length);
-
-  if (areAllCommentsShown) {
-    commentsLoaderElement.classList.add('hidden');
-  } else {
-    commentsLoaderElement.classList.remove('hidden');
-  }
-
   commentsListElement.appendChild(commentsFragment);
+
+  currentCommentsCount += COMMENTS_STEP;
+
+  updateCommentPanel(currentCommentsCount, commentsData.length);
+
+  if (currentCommentsCount >= commentsData.length) {
+    commentsLoaderElement.classList.add('hidden');
+  }
 };
 
 const addCommentsHandler = () => {
-  const previousShownComments = currentShownComments;
-  const areTotalCommentsReached = currentShownComments + COMMENTS_STEP > commentsData.length;
+  addComments(commentsData.slice(currentCommentsCount, currentCommentsCount + COMMENTS_STEP));
+};
 
-  if (areTotalCommentsReached) {
-    currentShownComments = commentsData.length;
-  } else {
-    currentShownComments += COMMENTS_STEP;
-  }
-
-  updateComments(commentsData.slice(previousShownComments, currentShownComments));
+export const closeComments = () => {
+  currentCommentsCount = 0;
+  commentsListElement.innerHTML = '';
+  commentsLoaderElement.classList.remove('hidden');
+  commentsLoaderElement.removeEventListener('click', addCommentsHandler);
 };
 
 export const initComments = (data) => {
   commentsData = data;
 
-  removeComments();
-  updateComments(commentsData.slice(0, COMMENTS_STEP));
+  closeComments();
+  addComments(commentsData.slice(0, COMMENTS_STEP));
 
   commentsLoaderElement.addEventListener('click', addCommentsHandler);
-};
-
-export const closeComments = () => {
-  commentsLoaderElement.removeEventListener('click', addCommentsHandler);
-  removeComments();
 };
