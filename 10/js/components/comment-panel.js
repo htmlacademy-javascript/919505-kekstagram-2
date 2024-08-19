@@ -2,12 +2,12 @@ const shownCommentsElement = document.querySelector('.social__comment-shown-coun
 const totalCommentsElement = document.querySelector('.social__comment-total-count');
 
 // Обновляет число показанных комментариев,
-export const updateCommentPanel = (areAllCommentsShown, currentShownComments, totalComments) => {
+export const updateCommentPanel = (currentCommentsCount, totalComments) => {
   totalCommentsElement.textContent = totalComments.toString();
 
-  if (areAllCommentsShown) {
+  if (currentCommentsCount >= totalComments) {
     shownCommentsElement.textContent = totalComments.toString();
   } else {
-    shownCommentsElement.textContent = currentShownComments.toString();
+    shownCommentsElement.textContent = currentCommentsCount.toString();
   }
 };
