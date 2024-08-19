@@ -1,4 +1,4 @@
-import {deleteComments, updateComments} from './comments.js';
+import {initComments, closeComments} from './comment-list.js';
 import {KeyCode} from '../const.js';
 
 const photoCard = document.querySelector('.big-picture');
@@ -6,8 +6,6 @@ const closeButton = photoCard.querySelector('.big-picture__cancel');
 const imgElement = photoCard.querySelector('.big-picture__img img');
 const likesElement = photoCard.querySelector('.likes-count');
 const descriptionElement = photoCard.querySelector('.social__caption');
-const shownCommentsElement = photoCard.querySelector('.social__comment-shown-count');
-const totalCommentsElement = photoCard.querySelector('.social__comment-total-count');
 
 const updateCardContent = (data) => {
   const {url, likes, description, comments} = data;
@@ -16,11 +14,8 @@ const updateCardContent = (data) => {
   imgElement.alt = description;
   likesElement.textContent = likes;
   descriptionElement.textContent = description;
-  shownCommentsElement.textContent = comments.length.toString();
-  totalCommentsElement.textContent = comments.length.toString();
 
-  deleteComments();
-  updateComments(comments);
+  initComments(comments);
 };
 
 const closeButtonHandler = () => {
@@ -39,6 +34,8 @@ function closePhotoCard () {
   document.removeEventListener('keydown', keydownHandler);
   closeButton.removeEventListener('click', closeButtonHandler);
 
+  closeComments();
+
   photoCard.classList.add('hidden');
 }
 
@@ -50,8 +47,4 @@ export const openPhotoCard = (data) => {
   closeButton.addEventListener('click', closeButtonHandler);
   document.addEventListener('keydown', keydownHandler);
   document.body.classList.add('modal-open');
-
-  // Временно скрываем блоки счетчика и загрузки комментариев
-  photoCard.querySelector('.social__comment-count').classList.add('hidden');
-  photoCard.querySelector('.comments-loader').classList.add('hidden');
 };
