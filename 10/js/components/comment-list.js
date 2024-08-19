@@ -19,12 +19,12 @@ const createCommentsFragment = (data) => {
   return commentsFragment;
 };
 
-const addComments = (comments) => {
-  const commentsFragment = createCommentsFragment(comments);
+const addComments = () => {
+  const newComments = commentsData.slice(currentCommentsCount, currentCommentsCount + COMMENTS_STEP);
+  const commentsFragment = createCommentsFragment(newComments);
+
   commentsListElement.appendChild(commentsFragment);
-
   currentCommentsCount += COMMENTS_STEP;
-
   updateCommentPanel(currentCommentsCount, commentsData.length);
 
   if (currentCommentsCount >= commentsData.length) {
@@ -33,7 +33,7 @@ const addComments = (comments) => {
 };
 
 const addCommentsHandler = () => {
-  addComments(commentsData.slice(currentCommentsCount, currentCommentsCount + COMMENTS_STEP));
+  addComments();
 };
 
 export const closeComments = () => {
@@ -47,7 +47,7 @@ export const initComments = (data) => {
   commentsData = data;
 
   closeComments();
-  addComments(commentsData.slice(0, COMMENTS_STEP));
+  addComments();
 
   commentsLoaderElement.addEventListener('click', addCommentsHandler);
 };
