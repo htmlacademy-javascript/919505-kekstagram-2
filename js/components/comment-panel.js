@@ -5,7 +5,9 @@ const totalCommentsElement = document.querySelector('.social__comment-total-coun
 export const updateCommentPanel = (areAllCommentsShown, currentShownComments, totalComments) => {
   totalCommentsElement.textContent = totalComments.toString();
 
-  areAllCommentsShown
-    ? shownCommentsElement.textContent = totalComments.toString()
-    : shownCommentsElement.textContent = currentShownComments.toString();
+  if (areAllCommentsShown) {
+    shownCommentsElement.textContent = totalComments.toString();
+  } else {
+    shownCommentsElement.textContent = currentShownComments.toString();
+  }
 };

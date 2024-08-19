@@ -30,19 +30,24 @@ const updateComments = (comments) => {
 
   updateCommentPanel(areAllCommentsShown, currentShownComments, commentsData.length);
 
-  areAllCommentsShown
-    ? commentsLoaderElement.classList.add('hidden')
-    : commentsLoaderElement.classList.remove('hidden');
+  if (areAllCommentsShown) {
+    commentsLoaderElement.classList.add('hidden');
+  } else {
+    commentsLoaderElement.classList.remove('hidden');
+  }
 
   commentsListElement.appendChild(commentsFragment);
 };
 
 const addCommentsHandler = () => {
   const previousShownComments = currentShownComments;
+  const areTotalCommentsReached = currentShownComments + COMMENTS_STEP > commentsData.length;
 
-  currentShownComments + COMMENTS_STEP > commentsData.length
-    ? currentShownComments = commentsData.length
-    : currentShownComments += COMMENTS_STEP;
+  if (areTotalCommentsReached) {
+    currentShownComments = commentsData.length;
+  } else {
+    currentShownComments += COMMENTS_STEP;
+  }
 
   updateComments(commentsData.slice(previousShownComments, currentShownComments));
 };
