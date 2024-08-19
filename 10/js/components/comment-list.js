@@ -8,7 +8,7 @@ const commentsListElement = document.querySelector('.social__comments');
 let commentsData = [];
 let currentCommentsCount = 0;
 
-export const createCommentsFragment = (data) => {
+const createCommentsFragment = (data) => {
   const commentsFragment = document.createDocumentFragment();
 
   data.forEach((comment) => {
