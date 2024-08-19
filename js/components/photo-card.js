@@ -1,4 +1,4 @@
-import {initComments, closeComments} from './comments.js';
+import {initComments, closeComments} from './comment-list.js';
 import {KeyCode} from '../const.js';
 
 const photoCard = document.querySelector('.big-picture');

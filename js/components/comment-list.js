@@ -1,6 +1,6 @@
+import {createCommentsFragment} from './comment-item';
 import {COMMENTS_STEP} from '../const.js';
 
-const commentTemplate = document.querySelector('.social__comment').cloneNode(true);
 const commentsListElement = document.querySelector('.social__comments');
 const shownCommentsElement = document.querySelector('.social__comment-shown-count');
 const totalCommentsElement = document.querySelector('.social__comment-total-count');
@@ -19,32 +19,6 @@ const updateCommentPanel = () => {
     shownCommentsElement.textContent = currentShownComments.toString();
     commentsLoaderElement.classList.remove('hidden');
   }
-};
-
-// Создает ноду комментария для последующего рендера
-const createComment = (data) => {
-  const {avatar, name, message} = data;
-
-  const newComment = commentTemplate.cloneNode(true);
-  const imgElement = newComment.querySelector('.social__picture');
-  const textElement = newComment.querySelector('.social__text');
-
-  imgElement.src = avatar;
-  imgElement.alt = name;
-  textElement.textContent = message;
-
-  return newComment;
-};
-// Создает фрагмент с комментариями
-const createCommentsFragment = (data) => {
-  const commentsFragment = document.createDocumentFragment();
-
-  data.forEach((comment) => {
-    const newComment = createComment(comment);
-    commentsFragment.appendChild(newComment);
-  });
-
-  return commentsFragment;
 };
 
 const removeComments = () => {
