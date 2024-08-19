@@ -15,7 +15,6 @@ const createComment = (data) => {
 
   return newComment;
 };
-
 // Создает фрагмент с комментариями
 const createCommentsFragment = (commentsData) => {
   const commentsFragment = document.createDocumentFragment();
@@ -28,10 +27,11 @@ const createCommentsFragment = (commentsData) => {
   return commentsFragment;
 };
 
-// Удаляет старые комментарии и добавляет фрагмент с новыми
+export const deleteComments = () => {
+  commentsListElement.innerHTML = '';
+};
+
 export const updateComments = (comments) => {
   const commentsFragment = createCommentsFragment(comments);
-
-  commentsListElement.innerHTML = '';
   commentsListElement.appendChild(commentsFragment);
 };

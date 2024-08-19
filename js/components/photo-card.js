@@ -1,4 +1,4 @@
-import {updateComments} from './comments.js';
+import {deleteComments, updateComments} from './comments.js';
 import {KeyCode} from '../const.js';
 
 const photoCard = document.querySelector('.big-picture');
@@ -19,6 +19,7 @@ const updateCardContent = (data) => {
   shownCommentsElement.textContent = comments.length.toString();
   totalCommentsElement.textContent = comments.length.toString();
 
+  deleteComments();
   updateComments(comments);
 };
 
@@ -27,7 +28,7 @@ const closeButtonHandler = () => {
 };
 
 const keydownHandler = (evt) => {
-  if (evt.keyCode === KeyCode.ESC) {
+  if (evt.key === KeyCode.ESC) {
     closePhotoCard();
   }
 };
