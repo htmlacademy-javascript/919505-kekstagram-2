@@ -1,6 +1,6 @@
 import {createPreview} from './preview-item.js';
 
-const PreviewListElement = document.querySelector('.pictures');
+const previewListElement = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
 export const renderPreviews = (data) => {
@@ -9,15 +9,15 @@ export const renderPreviews = (data) => {
     fragment.appendChild(newPreview);
   });
 
-  PreviewListElement.appendChild(fragment);
+  previewListElement.appendChild(fragment);
 };
 
 export const initPreviewList = (data, callback) => {
-  PreviewListElement.addEventListener('click', (evt) => {
-    evt.preventDefault();
+  previewListElement.addEventListener('click', (evt) => {
     const activePreview = evt.target.closest('.picture');
 
     if (activePreview) {
+      evt.preventDefault();
       const activePreviewId = activePreview.dataset.photoId;
       const activePreviewData = data.find((entity) => entity.id === Number(activePreviewId));
 
