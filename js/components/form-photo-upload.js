@@ -13,15 +13,15 @@ const updatePreview = (file) => {
 
     reader.onload = function(e) {
       imgPreview.src = e.target.result;
-    }
+    };
 
     reader.readAsDataURL(file);
   }
-}
+};
 
 const closeButtonHandler = () => {
   closeForm();
-}
+};
 
 const keydownHandler = (evt) => {
   if (evt.key === KeyCode.ESC) {
@@ -39,7 +39,7 @@ function closeForm () {
 }
 
 const imgUploadHandler = (evt) => {
-  const file = evt.target.files[0]
+  const file = evt.target.files[0];
 
   if (file) {
     updatePreview(file);
@@ -54,4 +54,4 @@ const imgUploadHandler = (evt) => {
 
 export const initUploadForm = () => {
   imgUploadInput.addEventListener('change', imgUploadHandler);
-}
+};
