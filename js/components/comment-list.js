@@ -1,7 +1,8 @@
 import {createComment} from './comment-item.js';
-import {updateCommentPanel} from './comment-panel.js';
 import {COMMENTS_STEP} from '../const.js';
 
+const shownCommentsElement = document.querySelector('.social__comment-shown-count');
+const totalCommentsElement = document.querySelector('.social__comment-total-count');
 const commentsLoaderElement = document.querySelector('.comments-loader');
 const commentsListElement = document.querySelector('.social__comments');
 
@@ -20,14 +21,15 @@ const createCommentsFragment = (data) => {
 };
 
 const addComments = () => {
+  const areAllCommentsShown = currentCommentsCount + COMMENTS_STEP >= commentsData.length;
   const newComments = commentsData.slice(currentCommentsCount, currentCommentsCount + COMMENTS_STEP);
   const commentsFragment = createCommentsFragment(newComments);
 
+  currentCommentsCount = areAllCommentsShown ? commentsData.length : currentCommentsCount + COMMENTS_STEP;
+  shownCommentsElement.textContent = currentCommentsCount;
   commentsListElement.appendChild(commentsFragment);
-  currentCommentsCount += COMMENTS_STEP;
-  updateCommentPanel(currentCommentsCount, commentsData.length);
 
-  if (currentCommentsCount >= commentsData.length) {
+  if (areAllCommentsShown) {
     commentsLoaderElement.classList.add('hidden');
   }
 };
@@ -45,6 +47,7 @@ export const closeComments = () => {
 
 export const initComments = (data) => {
   commentsData = data;
+  totalCommentsElement.textContent = commentsData.length.toString();
 
   closeComments();
   addComments();
