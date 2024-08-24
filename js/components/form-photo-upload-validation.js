@@ -28,7 +28,7 @@ const addHashtagError = (newError) => {
   if (!currentHashtagErrors) {
     currentHashtagErrors = newError;
   } else if (!currentHashtagErrors.includes(newError)) {
-    currentHashtagErrors += `, ${newError}`
+    currentHashtagErrors += `, ${newError}`;
   }
 };
 
@@ -74,4 +74,4 @@ pristine.addValidator(descriptionInput, validateDescription, validationErrorMess
 
 export const validateForm = () => {
   pristine.validate();
-}
+};
