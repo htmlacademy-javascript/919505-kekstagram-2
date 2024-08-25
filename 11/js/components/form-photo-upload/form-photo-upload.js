@@ -67,8 +67,10 @@ const imgUploadHandler = (evt) => {
     imgUploadOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    document.addEventListener('keydown', keydownHandler);
     imgUploadCloseButton.addEventListener('click', closeButtonHandler);
+    hashtagsInput.addEventListener('keydown', inputKeydownHandler);
+    descriptionInput.addEventListener('keydown', inputKeydownHandler);
+    document.addEventListener('keydown', keydownHandler);
   }
 };
 
@@ -80,6 +82,4 @@ const formSubmitHandler = (evt) => {
 export const initUploadForm = () => {
   imgUploadInput.addEventListener('change', imgUploadHandler);
   form.addEventListener('submit', formSubmitHandler);
-  hashtagsInput.addEventListener('keydown', inputKeydownHandler);
-  descriptionInput.addEventListener('keydown', inputKeydownHandler);
 };
