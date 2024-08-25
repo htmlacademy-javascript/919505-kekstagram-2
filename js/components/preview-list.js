@@ -1,27 +1,29 @@
 import {createPreview} from './preview-item.js';
 
-const PreviewListElement = document.querySelector('.pictures');
+const previewListElement = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
 
-export const renderPreviews = (data) => {
-  data.forEach((entity) => {
+const renderPreviews = (photoData) => {
+  photoData.forEach((entity) => {
     const newPreview = createPreview(entity);
     fragment.appendChild(newPreview);
   });
 
-  PreviewListElement.appendChild(fragment);
+  previewListElement.appendChild(fragment);
 };
 
-export const initPreviewList = (data, callback) => {
-  PreviewListElement.addEventListener('click', (evt) => {
-    evt.preventDefault();
+export const initPreviewList = (photoData, onPreviewClickCallback) => {
+  renderPreviews(photoData);
+
+  previewListElement.addEventListener('click', (evt) => {
     const activePreview = evt.target.closest('.picture');
 
     if (activePreview) {
+      evt.preventDefault();
       const activePreviewId = activePreview.dataset.photoId;
-      const activePreviewData = data.find((entity) => entity.id === Number(activePreviewId));
+      const activePreviewData = photoData.find((entity) => entity.id === Number(activePreviewId));
 
-      callback(activePreviewData);
+      onPreviewClickCallback(activePreviewData);
     }
   });
 };
