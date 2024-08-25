@@ -1,4 +1,4 @@
-import {initFromValidator} from './form-photo-upload-validation.js';
+import {initFromValidator} from './validator.js';
 import {KeyCode} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
