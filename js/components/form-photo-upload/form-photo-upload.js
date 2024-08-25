@@ -1,5 +1,5 @@
-import {validateForm} from './form-photo-upload-validation.js';
-import {KeyCode} from '../const.js';
+import {initFromValidator} from './form-photo-upload-validation.js';
+import {KeyCode} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -8,6 +8,8 @@ const descriptionInput = form.querySelector('.text__description');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUploadCloseButton = form.querySelector('.img-upload__cancel');
 const imgPreview = form.querySelector('.img-upload__preview img');
+
+const validateForm = initFromValidator(form, hashtagsInput, descriptionInput);
 
 const updatePreview = (file) => {
   if (file) {

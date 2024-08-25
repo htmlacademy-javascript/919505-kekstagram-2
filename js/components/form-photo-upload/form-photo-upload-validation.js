@@ -10,15 +10,11 @@ const validationErrorMessages = {
 
 const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 
-const form = document.querySelector('.img-upload__form');
-const hashtagsInput = form.querySelector('.text__hashtags');
-const descriptionInput = form.querySelector('.text__description');
+let form = null;
+let hashtagsInput = null;
+let descriptionInput = null;
 
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-}, true);
+let pristine = null;
 
 let currentHashtagErrors = '';
 
@@ -69,9 +65,19 @@ const validateHashtags = () => {
 
 const validateDescription = () => descriptionInput.value.length <= MAX_DESCRIPTION_LENGTH;
 
-pristine.addValidator(hashtagsInput, validateHashtags, getCurrentHashtagErrors);
-pristine.addValidator(descriptionInput, validateDescription, validationErrorMessages.tooLongComment);
+export const initFromValidator = (formElem, hashtagsInputElem, descriptionInputElem) => {
+  form = formElem;
+  hashtagsInput = hashtagsInputElem;
+  descriptionInput = descriptionInputElem;
 
-export const validateForm = () => {
-  pristine.validate();
+  pristine = new Pristine(form, {
+    classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper',
+  }, true);
+
+  pristine.addValidator(hashtagsInput, validateHashtags, getCurrentHashtagErrors);
+  pristine.addValidator(descriptionInput, validateDescription, validationErrorMessages.tooLongComment);
+
+  return pristine.validate;
 };
