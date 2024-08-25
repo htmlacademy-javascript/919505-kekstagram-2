@@ -10,12 +10,10 @@ const validationErrorMessages = {
 
 const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 
-let form = null;
 let hashtagsInput = null;
 let descriptionInput = null;
 
 let pristine = null;
-
 let currentHashtagErrors = '';
 
 const getCurrentHashtagErrors = () => currentHashtagErrors;
@@ -66,11 +64,10 @@ const validateHashtags = () => {
 const validateDescription = () => descriptionInput.value.length <= MAX_DESCRIPTION_LENGTH;
 
 export const initFromValidator = (formElem, hashtagsInputElem, descriptionInputElem) => {
-  form = formElem;
   hashtagsInput = hashtagsInputElem;
   descriptionInput = descriptionInputElem;
 
-  pristine = new Pristine(form, {
+  pristine = new Pristine(formElem, {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
