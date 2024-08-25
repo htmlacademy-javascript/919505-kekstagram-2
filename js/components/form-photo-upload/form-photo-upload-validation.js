@@ -13,7 +13,6 @@ const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
 let hashtagsInput = null;
 let descriptionInput = null;
 
-let pristine = null;
 let currentHashtagErrors = '';
 
 const getCurrentHashtagErrors = () => currentHashtagErrors;
@@ -67,7 +66,7 @@ export const initFromValidator = (formElem, hashtagsInputElem, descriptionInputE
   hashtagsInput = hashtagsInputElem;
   descriptionInput = descriptionInputElem;
 
-  pristine = new Pristine(formElem, {
+  const pristine = new Pristine(formElem, {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
