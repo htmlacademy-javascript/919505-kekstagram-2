@@ -9,6 +9,9 @@ const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUploadCloseButton = form.querySelector('.img-upload__cancel');
 const imgPreview = form.querySelector('.img-upload__preview img');
 
+/**
+ * @type {Function}
+ */
 const validateForm = initFromValidator(form, hashtagsInput, descriptionInput);
 
 const updatePreview = (file) => {

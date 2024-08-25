@@ -15,7 +15,6 @@ let hashtagsInput = null;
 let descriptionInput = null;
 
 let pristine = null;
-
 let currentHashtagErrors = '';
 
 const getCurrentHashtagErrors = () => currentHashtagErrors;
