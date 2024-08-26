@@ -1,21 +1,7 @@
 import {initFromValidator} from './validator.js';
+import {initEffectFilter} from './filter-effect.js';
+import {ImgScaleConfig} from './config.js';
 import {KeyCode} from '../../const.js';
-
-const imgScaleConfig = {
-  min: 25,
-  max: 100,
-  step: 25,
-  initialScale: 100
-};
-
-const effectsConfig = {
-  none: 'none',
-  chrome: 'chrome',
-  sepia: 'sepia',
-  marvin: 'marvin',
-  phobos: 'phobos',
-  heat: 'heat'
-};
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -27,118 +13,6 @@ const imgPreview = form.querySelector('.img-upload__preview img');
 const decreaseScaleButton = form.querySelector('.scale__control--smaller');
 const scaleControl = form.querySelector('.scale__control--value');
 const increaseScaleButton = form.querySelector('.scale__control--bigger');
-const effectInputsList = form.querySelector('.effects__list');
-const effectLevelInput = form.querySelector('.effect-level__value');
-const effectSliderContainer = form.querySelector('.img-upload__effect-level');
-const effectSliderDiv = form.querySelector('.effect-level__slider');
-
-noUiSlider.create(effectSliderDiv, {
-  range: {min: 0, max: 1},
-  start: 0,
-  step: 0.1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  }
-});
-
-function handleRadioChange(event) {
-  if (event.target.matches('.effects__radio')) {
-    const selectedEffect = event.target.value;
-    let effectLevel = '';
-
-    switch (selectedEffect) {
-      case effectsConfig.chrome:
-        effectSliderContainer.classList.remove('hidden');
-
-        effectSliderDiv.noUiSlider.updateOptions({
-          range: {min: 0, max: 1},
-          step: 0.1,
-          start: 0,
-        });
-        effectSliderDiv.noUiSlider.on('update', () => {
-          effectLevel = effectSliderDiv.noUiSlider.get();
-          imgPreview.style.filter = `grayscale(${effectLevel})`;
-          effectLevelInput.value = effectLevel;
-        });
-        break;
-
-      case effectsConfig.sepia:
-        effectSliderContainer.classList.remove('hidden');
-        effectSliderDiv.noUiSlider.updateOptions({
-          range: {min: 0, max: 1},
-          step: 0.1,
-          start: 0,
-        });
-        effectSliderDiv.noUiSlider.on('update', () => {
-          effectLevel = effectSliderDiv.noUiSlider.get();
-          imgPreview.style.filter = `sepia(${effectLevel})`;
-          effectLevelInput.value = effectLevel;
-        });
-        break;
-
-      case effectsConfig.marvin:
-        effectSliderContainer.classList.remove('hidden');
-        effectSliderDiv.noUiSlider.updateOptions({
-          range: {min: 0, max: 100},
-          step: 1,
-          start: 0,
-        });
-        effectSliderDiv.noUiSlider.on('update', () => {
-          effectLevel = effectSliderDiv.noUiSlider.get();
-          imgPreview.style.filter = `invert(${effectLevel}%)`;
-          effectLevelInput.value = effectLevel;
-        });
-        break;
-
-      case effectsConfig.phobos:
-        effectSliderContainer.classList.remove('hidden');
-        effectSliderDiv.noUiSlider.updateOptions({
-          range: {min: 0, max: 3},
-          step: 0.1,
-          start: 0,
-        });
-        effectSliderDiv.noUiSlider.on('update', () => {
-          effectLevel = effectSliderDiv.noUiSlider.get();
-          imgPreview.style.filter = `blur(${effectLevel}px)`;
-          effectLevelInput.value = effectLevel;
-        });
-        break;
-
-      case effectsConfig.heat:
-        effectSliderContainer.classList.remove('hidden');
-        effectSliderDiv.noUiSlider.updateOptions({
-          range: {min: 1, max: 3},
-          step: 0.1,
-          start: 1,
-        });
-        effectSliderDiv.noUiSlider.on('update', () => {
-          effectLevel = effectSliderDiv.noUiSlider.get();
-          imgPreview.style.filter = `brightness(${effectLevel})`;
-          effectLevelInput.value = effectLevel;
-        });
-        break;
-
-      default:
-        event.target.value = 0;
-        effectLevel = '';
-        effectLevelInput.value = '';
-        imgPreview.style.filter = '';
-        effectSliderContainer.classList.add('hidden');
-        break;
-    }
-  }
-}
-
-effectInputsList.addEventListener('change', handleRadioChange);
 
 /**
  * @type {Function}
@@ -183,22 +57,22 @@ const changeImgScale = (scale) => {
 const decreaseScaleHandler = () => {
   const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
 
-  if (currentScale <= imgScaleConfig.min) {
+  if (currentScale <= ImgScaleConfig.min) {
     return;
   }
 
-  const newScale = currentScale - imgScaleConfig.step;
+  const newScale = currentScale - ImgScaleConfig.step;
   changeImgScale(newScale);
 };
 
 const increaseScaleHandler = () => {
   const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
 
-  if (currentScale >= imgScaleConfig.max) {
+  if (currentScale >= ImgScaleConfig.max) {
     return;
   }
 
-  const newScale = currentScale + imgScaleConfig.step;
+  const newScale = currentScale + ImgScaleConfig.step;
   changeImgScale(newScale);
 };
 
@@ -229,7 +103,7 @@ const imgUploadHandler = (evt) => {
     imgUploadOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    changeImgScale(imgScaleConfig.initialScale);
+    changeImgScale(ImgScaleConfig.initialScale);
 
     imgUploadCloseButton.addEventListener('click', closeButtonHandler);
     hashtagsInput.addEventListener('keydown', inputKeydownHandler);
@@ -243,7 +117,7 @@ const formSubmitHandler = () => {
 };
 
 export const initUploadForm = () => {
-  effectSliderContainer.classList.add('hidden');
+  initEffectFilter(form, imgPreview);
 
   imgUploadInput.addEventListener('change', imgUploadHandler);
   decreaseScaleButton.addEventListener('click', decreaseScaleHandler);
