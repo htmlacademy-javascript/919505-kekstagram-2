@@ -1,7 +1,7 @@
 import {EffectsConfig} from './config.js';
 
 let imgPreview = null;
-let effectSliderContainer = null
+let effectSliderContainer = null;
 let effectSliderDiv = null;
 let effectInputsList = null;
 let effectLevelInput = null;
@@ -17,7 +17,7 @@ const updateFilterEffect = (filterName) => {
   });
 
   effectSliderContainer.classList.remove('hidden');
-}
+};
 
 const handleRadioChange = (evt) => {
   if (evt.target.matches('.effects__radio')) {
@@ -52,7 +52,7 @@ const handleRadioChange = (evt) => {
         break;
     }
   }
-}
+};
 
 export const initEffectFilter = (form, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
@@ -65,4 +65,4 @@ export const initEffectFilter = (form, imgPreviewElem) => {
 
   effectInputsList.addEventListener('change', handleRadioChange);
   effectSliderContainer.classList.add('hidden');
-}
+};
