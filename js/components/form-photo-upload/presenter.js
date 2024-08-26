@@ -6,7 +6,7 @@ const imgScaleConfig = {
   max: 100,
   step: 25,
   initialScale: 100
-}
+};
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -36,11 +36,6 @@ const updatePreview = (file) => {
   }
 };
 
-const changeImgScale = (scale) => {
-  const computedScale = scale / 100;
-  imgPreview.style.transform = `scale(${computedScale})`;
-}
-
 const closeButtonHandler = () => {
   closeForm();
 };
@@ -57,6 +52,35 @@ const inputKeydownHandler = (evt) => {
   }
 };
 
+const changeImgScale = (scale) => {
+  const computedScale = scale / 100;
+
+  imgPreview.style.transform = `scale(${computedScale})`;
+  scaleControl.value = `${scale}%`;
+};
+
+const decreaseScaleHandler = () => {
+  const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
+
+  if (currentScale <= imgScaleConfig.min) {
+    return;
+  }
+
+  const newScale = currentScale - imgScaleConfig.step;
+  changeImgScale(newScale);
+};
+
+const increaseScaleHandler = () => {
+  const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
+
+  if (currentScale >= imgScaleConfig.max) {
+    return;
+  }
+
+  const newScale = currentScale + imgScaleConfig.step;
+  changeImgScale(newScale);
+};
+
 // Функция не стрелочная, потому что нужен хойстинг
 function closeForm () {
   imgUploadOverlay.classList.add('hidden');
@@ -65,6 +89,8 @@ function closeForm () {
   imgUploadCloseButton.removeEventListener('click', closeButtonHandler);
   hashtagsInput.removeEventListener('keydown', inputKeydownHandler);
   descriptionInput.removeEventListener('keydown', inputKeydownHandler);
+  decreaseScaleButton.removeEventListener('click', decreaseScaleHandler);
+  increaseScaleButton.removeEventListener('click', increaseScaleHandler);
   document.removeEventListener('keydown', keydownHandler);
 
   imgUploadInput.value = '';
@@ -94,32 +120,6 @@ const imgUploadHandler = (evt) => {
 const formSubmitHandler = () => {
   validateForm();
 };
-
-const decreaseScaleHandler = () => {
-  let currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
-
-  if (currentScale <= imgScaleConfig.min) {
-    return;
-  }
-
-  const newScale = currentScale - imgScaleConfig.step;
-
-  scaleControl.value = `${newScale}%`;
-  changeImgScale(newScale);
-}
-
-const increaseScaleHandler = () => {
-  let currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
-
-  if (currentScale >= imgScaleConfig.max) {
-    return;
-  }
-
-  const newScale = currentScale + imgScaleConfig.step;
-
-  scaleControl.value = `${newScale}%`;
-  changeImgScale(newScale);
-}
 
 export const initUploadForm = () => {
   imgUploadInput.addEventListener('change', imgUploadHandler);
