@@ -1,14 +1,4 @@
-const MAX_HASHTAGS_AMOUNT = 5;
-const MAX_DESCRIPTION_LENGTH = 140;
-
-const validationErrorMessages = {
-  invalidHashtag: 'введён невалидный хэштег',
-  tooManyHashtags: 'превышено количество хэштегов',
-  repeatedHashtags: 'хэштеги повторяются',
-  tooLongComment: 'длина комментария больше 140 символов',
-};
-
-const hashtagRegExp = /^#[a-zа-яё0-9]{1,19}$/i;
+import {MAX_HASHTAGS_AMOUNT, MAX_DESCRIPTION_LENGTH, HASHTAG_REGEXP,ValidationErrorMessages} from './config';
 
 let hashtagsInput = null;
 let descriptionInput = null;
@@ -39,18 +29,18 @@ const validateHashtags = () => {
   const hashtagSet = new Set();
 
   if (hashtagsArray.length > MAX_HASHTAGS_AMOUNT) {
-    addHashtagError(validationErrorMessages.tooManyHashtags);
+    addHashtagError(ValidationErrorMessages.tooManyHashtags);
     isValid = false;
   }
 
   hashtagsArray.forEach((hashtag) => {
-    if (!hashtagRegExp.test(hashtag)) {
-      addHashtagError(validationErrorMessages.invalidHashtag);
+    if (!HASHTAG_REGEXP.test(hashtag)) {
+      addHashtagError(ValidationErrorMessages.invalidHashtag);
       isValid = false;
     }
 
     if (hashtagSet.has(hashtag)) {
-      addHashtagError(validationErrorMessages.repeatedHashtags);
+      addHashtagError(ValidationErrorMessages.repeatedHashtags);
       isValid = false;
     }
 
@@ -73,7 +63,7 @@ export const initFromValidator = (formElem, hashtagsInputElem, descriptionInputE
   }, true);
 
   pristine.addValidator(hashtagsInput, validateHashtags, getCurrentHashtagErrors);
-  pristine.addValidator(descriptionInput, validateDescription, validationErrorMessages.tooLongComment);
+  pristine.addValidator(descriptionInput, validateDescription, ValidationErrorMessages.tooLongComment);
 
   return pristine.validate;
 };

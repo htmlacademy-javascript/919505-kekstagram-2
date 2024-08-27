@@ -1,4 +1,6 @@
-import {initFromValidator} from './form-photo-upload-validation.js';
+import {initFromValidator} from './validator.js';
+import {initEffectFilter} from './filter-effect.js';
+import {ImgScaleConfig} from './config.js';
 import {KeyCode} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -8,6 +10,9 @@ const descriptionInput = form.querySelector('.text__description');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUploadCloseButton = form.querySelector('.img-upload__cancel');
 const imgPreview = form.querySelector('.img-upload__preview img');
+const decreaseScaleButton = form.querySelector('.scale__control--smaller');
+const scaleControl = form.querySelector('.scale__control--value');
+const increaseScaleButton = form.querySelector('.scale__control--bigger');
 
 /**
  * @type {Function}
@@ -42,6 +47,35 @@ const inputKeydownHandler = (evt) => {
   }
 };
 
+const changeImgScale = (scale) => {
+  const computedScale = scale / 100;
+
+  imgPreview.style.transform = `scale(${computedScale})`;
+  scaleControl.value = `${scale}%`;
+};
+
+const decreaseScaleHandler = () => {
+  const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
+
+  if (currentScale <= ImgScaleConfig.min) {
+    return;
+  }
+
+  const newScale = currentScale - ImgScaleConfig.step;
+  changeImgScale(newScale);
+};
+
+const increaseScaleHandler = () => {
+  const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
+
+  if (currentScale >= ImgScaleConfig.max) {
+    return;
+  }
+
+  const newScale = currentScale + ImgScaleConfig.step;
+  changeImgScale(newScale);
+};
+
 // Функция не стрелочная, потому что нужен хойстинг
 function closeForm () {
   imgUploadOverlay.classList.add('hidden');
@@ -50,6 +84,8 @@ function closeForm () {
   imgUploadCloseButton.removeEventListener('click', closeButtonHandler);
   hashtagsInput.removeEventListener('keydown', inputKeydownHandler);
   descriptionInput.removeEventListener('keydown', inputKeydownHandler);
+  decreaseScaleButton.removeEventListener('click', decreaseScaleHandler);
+  increaseScaleButton.removeEventListener('click', increaseScaleHandler);
   document.removeEventListener('keydown', keydownHandler);
 
   imgUploadInput.value = '';
@@ -67,6 +103,8 @@ const imgUploadHandler = (evt) => {
     imgUploadOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
+    changeImgScale(ImgScaleConfig.initialScale);
+
     imgUploadCloseButton.addEventListener('click', closeButtonHandler);
     hashtagsInput.addEventListener('keydown', inputKeydownHandler);
     descriptionInput.addEventListener('keydown', inputKeydownHandler);
@@ -74,12 +112,15 @@ const imgUploadHandler = (evt) => {
   }
 };
 
-const formSubmitHandler = (evt) => {
-  evt.preventDefault();
+const formSubmitHandler = () => {
   validateForm();
 };
 
 export const initUploadForm = () => {
+  initEffectFilter(form, imgPreview);
+
   imgUploadInput.addEventListener('change', imgUploadHandler);
+  decreaseScaleButton.addEventListener('click', decreaseScaleHandler);
+  increaseScaleButton.addEventListener('click', increaseScaleHandler);
   form.addEventListener('submit', formSubmitHandler);
 };

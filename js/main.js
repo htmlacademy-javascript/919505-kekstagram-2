@@ -1,7 +1,7 @@
 import {generatePhotosData} from './data/photos.js';
 import {initPreviewList} from './components/preview-list.js';
 import {openPhotoCard} from './components/photo-card.js';
-import {initUploadForm} from './components/form-photo-upload/form-photo-upload.js';
+import {initUploadForm} from './components/form-photo-upload/presenter.js';
 
 // Собираем данные фотографий в объект
 const photosData = generatePhotosData();
