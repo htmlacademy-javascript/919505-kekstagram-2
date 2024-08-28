@@ -57,22 +57,22 @@ const changeImgScale = (scale) => {
 const decreaseScaleHandler = () => {
   const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
 
-  if (currentScale <= ImgScaleConfig.min) {
+  if (currentScale <= ImgScaleConfig.MIN) {
     return;
   }
 
-  const newScale = currentScale - ImgScaleConfig.step;
+  const newScale = currentScale - ImgScaleConfig.STEP;
   changeImgScale(newScale);
 };
 
 const increaseScaleHandler = () => {
   const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
 
-  if (currentScale >= ImgScaleConfig.max) {
+  if (currentScale >= ImgScaleConfig.MAX) {
     return;
   }
 
-  const newScale = currentScale + ImgScaleConfig.step;
+  const newScale = currentScale + ImgScaleConfig.STEP;
   changeImgScale(newScale);
 };
 
@@ -103,7 +103,7 @@ const imgUploadHandler = (evt) => {
     imgUploadOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
 
-    changeImgScale(ImgScaleConfig.initialScale);
+    changeImgScale(ImgScaleConfig.INITIAL_SCALE);
 
     imgUploadCloseButton.addEventListener('click', closeButtonHandler);
     hashtagsInput.addEventListener('keydown', inputKeydownHandler);

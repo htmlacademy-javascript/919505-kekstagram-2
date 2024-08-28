@@ -1,4 +1,10 @@
-import {MAX_HASHTAGS_AMOUNT, MAX_DESCRIPTION_LENGTH, HASHTAG_REGEXP,ValidationErrorMessages} from './config';
+import {
+  MAX_HASHTAGS_AMOUNT,
+  MAX_DESCRIPTION_LENGTH,
+  HASHTAG_REGEXP,
+  pristineConfig,
+  ValidationErrorMessages
+} from './config';
 
 let hashtagsInput = null;
 let descriptionInput = null;
@@ -29,18 +35,18 @@ const validateHashtags = () => {
   const hashtagSet = new Set();
 
   if (hashtagsArray.length > MAX_HASHTAGS_AMOUNT) {
-    addHashtagError(ValidationErrorMessages.tooManyHashtags);
+    addHashtagError(ValidationErrorMessages.TOO_MANY_HASHTAGS);
     isValid = false;
   }
 
   hashtagsArray.forEach((hashtag) => {
     if (!HASHTAG_REGEXP.test(hashtag)) {
-      addHashtagError(ValidationErrorMessages.invalidHashtag);
+      addHashtagError(ValidationErrorMessages.INVALID_HASHTAG);
       isValid = false;
     }
 
     if (hashtagSet.has(hashtag)) {
-      addHashtagError(ValidationErrorMessages.repeatedHashtags);
+      addHashtagError(ValidationErrorMessages.REPEATED_HASHTAGS);
       isValid = false;
     }
 
@@ -56,14 +62,10 @@ export const initFromValidator = (formElem, hashtagsInputElem, descriptionInputE
   hashtagsInput = hashtagsInputElem;
   descriptionInput = descriptionInputElem;
 
-  const pristine = new Pristine(formElem, {
-    classTo: 'img-upload__field-wrapper',
-    errorClass: 'img-upload__field-wrapper--error',
-    errorTextParent: 'img-upload__field-wrapper',
-  }, true);
+  const pristine = new Pristine(formElem, pristineConfig.settings, pristineConfig.isLiveValidation);
 
   pristine.addValidator(hashtagsInput, validateHashtags, getCurrentHashtagErrors);
-  pristine.addValidator(descriptionInput, validateDescription, ValidationErrorMessages.tooLongComment);
+  pristine.addValidator(descriptionInput, validateDescription, ValidationErrorMessages.TOO_LONG_COMMENT);
 
   return pristine.validate;
 };
