@@ -1,4 +1,4 @@
-import {ImgScaleConfig} from './config';
+import {ImgScaleConfig} from './config.js';
 
 let form = null;
 let imgPreview = null;
