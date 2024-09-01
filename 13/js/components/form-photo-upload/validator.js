@@ -4,7 +4,7 @@ import {
   HASHTAG_REGEXP,
   pristineConfig,
   ValidationErrorMessages
-} from './config';
+} from './config.js';
 
 let hashtagsInput = null;
 let descriptionInput = null;
