@@ -51,11 +51,12 @@ const handleRadioChange = (evt) => {
   }
 };
 
-export const resetEffectFilter = () => {
+// Функция не стрелочная, потому что нужен хойстинг
+export function resetEffectFilter () {
   effectLevelInput.value = 'none';
   imgPreview.style.filter = '';
   effectSliderContainer.classList.add('hidden');
-};
+}
 
 export const initEffectFilter = (form, imgPreviewElem) => {
   imgPreview = imgPreviewElem;

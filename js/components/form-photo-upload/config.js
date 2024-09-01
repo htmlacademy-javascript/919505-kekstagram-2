@@ -24,7 +24,7 @@ export const pristineConfig = {
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
   }
-}
+};
 
 export const effectsConfig = {
   initial : {

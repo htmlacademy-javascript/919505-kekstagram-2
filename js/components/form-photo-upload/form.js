@@ -59,7 +59,9 @@ const imgUploadHandler = (evt) => {
 
   if (file) {
     const reader = new FileReader();
-    reader.addEventListener('load', (evt) => imgPreview.src = evt.target.result);
+    reader.addEventListener('load', (e) => {
+      imgPreview.src = e.target.result;
+    });
     reader.readAsDataURL(file);
 
     openForm();
