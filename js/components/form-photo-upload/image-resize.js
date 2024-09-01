@@ -2,9 +2,8 @@ import {ImgScaleConfig} from './config';
 
 let form = null;
 let imgPreview = null;
+let scalePanel = null;
 let scaleControl = null;
-let decreaseScaleButton = null;
-let increaseScaleButton = null;
 
 const changeImgScale = (scale) => {
   const computedScale = scale / 100;
@@ -29,12 +28,10 @@ export const resetImgScale = () => changeImgScale(ImgScaleConfig.INITIAL_SCALE);
 export const initImageResize = (formElem, imgPreviewElem) => {
   form = formElem;
   imgPreview = imgPreviewElem;
-  scaleControl = form.querySelector('.scale__control--value');
-  decreaseScaleButton = form.querySelector('.scale__control--smaller');
-  increaseScaleButton = form.querySelector('.scale__control--bigger');
+  scalePanel = form.querySelector('.img-upload__scale');
+  scaleControl = scalePanel.querySelector('.scale__control--value');
 
   resetImgScale();
 
-  decreaseScaleButton.addEventListener('click', changeScaleHandler);
-  increaseScaleButton.addEventListener('click', changeScaleHandler);
+  scalePanel.addEventListener('click', changeScaleHandler);
 };
