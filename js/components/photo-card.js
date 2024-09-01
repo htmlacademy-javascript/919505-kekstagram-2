@@ -32,7 +32,6 @@ const keydownHandler = (evt) => {
 function closePhotoCard () {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', keydownHandler);
-  closeButton.removeEventListener('click', closeButtonHandler);
 
   closeComments();
 
@@ -44,7 +43,10 @@ export const openPhotoCard = (data) => {
 
   photoCard.classList.remove('hidden');
 
-  closeButton.addEventListener('click', closeButtonHandler);
   document.addEventListener('keydown', keydownHandler);
   document.body.classList.add('modal-open');
+};
+
+export const initPhotoCard = () => {
+  closeButton.addEventListener('click', closeButtonHandler);
 };
