@@ -45,13 +45,16 @@ const handleRadioChange = (evt) => {
         break;
 
       default:
-        evt.target.value = effectsConfig.none;
-        effectLevelInput.value = 'none';
-        imgPreview.style.filter = '';
-        effectSliderContainer.classList.add('hidden');
+        resetEffectFilter();
         break;
     }
   }
+};
+
+export const resetEffectFilter = () => {
+  effectLevelInput.value = 'none';
+  imgPreview.style.filter = '';
+  effectSliderContainer.classList.add('hidden');
 };
 
 export const initEffectFilter = (form, imgPreviewElem) => {
