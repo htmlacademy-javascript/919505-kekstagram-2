@@ -30,8 +30,5 @@ export const initImageResize = (formElem, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
   scalePanel = form.querySelector('.img-upload__scale');
   scaleControl = scalePanel.querySelector('.scale__control--value');
-
-  resetImgScale();
-
   scalePanel.addEventListener('click', changeScaleHandler);
 };
