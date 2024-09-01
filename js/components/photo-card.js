@@ -38,7 +38,7 @@ function closePhotoCard () {
   photoCard.classList.add('hidden');
 }
 
-export const openPhotoCard = (data) => {
+const openPhotoCard = (data) => {
   updateCardContent(data);
 
   photoCard.classList.remove('hidden');
@@ -49,4 +49,5 @@ export const openPhotoCard = (data) => {
 
 export const initPhotoCard = () => {
   closeButton.addEventListener('click', closeButtonHandler);
+  return openPhotoCard;
 };
