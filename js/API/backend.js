@@ -1,8 +1,6 @@
-import {openModal as openErrorModal} from '../components/modals/previews-download-error.js';
-
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
-export const getPhotoData = (onSuccess) => {
+export const getPhotoData = (onSuccess, onFailure) => {
   fetch(`${BASE_URL}/data`)
     .then((response) => {
       if (response.ok) {
@@ -14,7 +12,7 @@ export const getPhotoData = (onSuccess) => {
       onSuccess(photosData);
     })
     .catch((err) => {
-      openErrorModal(err.message);
+      onFailure(err.message);
     });
 };
 
