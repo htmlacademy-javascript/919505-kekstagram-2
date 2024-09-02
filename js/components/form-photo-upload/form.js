@@ -1,7 +1,7 @@
 import {initFromValidator} from './validator.js';
 import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
-import {postNewPhoto} from '../../API/backend.js';
+import {postNewPhoto} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
 import {KeyCode, ModalType} from '../../const.js';
 
@@ -33,14 +33,6 @@ const inputKeydownHandler = (evt) => {
   if (evt.key === KeyCode.ESC) {
     evt.stopPropagation();
   }
-};
-
-const blockSubmitButton = () => {
-  submitButton.setAttribute('disabled', 'true');
-};
-
-const unblockSubmitButton = () => {
-  submitButton.removeAttribute('disabled');
 };
 
 // Функция не стрелочная, потому что нужен хойстинг
@@ -90,7 +82,7 @@ const handleErrorUploading = () => {
 
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
-  blockSubmitButton();
+  submitButton.disabled = true;
 
   const isFormValid = validateForm();
   if (isFormValid) {
@@ -98,7 +90,7 @@ const formSubmitHandler = (evt) => {
     postNewPhoto(formData, handleSuccessfulUploading, handleErrorUploading);
   }
 
-  unblockSubmitButton();
+  submitButton.disabled = false;
 };
 
 export const initUploadForm = () => {

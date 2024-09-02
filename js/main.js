@@ -1,4 +1,4 @@
-import {getPhotoData} from './API/backend.js';
+import {getPhotoData} from './api.js';
 import {initPreviewList} from './components/preview-list.js';
 import {initUploadForm} from './components/form-photo-upload/form.js';
 import {openModal as openErrorModal} from './components/modals/previews-download-error.js';
