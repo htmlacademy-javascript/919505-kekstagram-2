@@ -1,4 +1,4 @@
-import {KeyCode} from '../../const';
+import {KeyCode} from '../../const.js';
 
 let modal = null;
 
