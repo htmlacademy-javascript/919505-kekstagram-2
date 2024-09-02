@@ -2,8 +2,8 @@ import {initFromValidator} from './validator.js';
 import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
 import {postNewPhoto} from '../../API/backend.js';
-import {openSuccessModal} from '../modals/succes.js';
-import {KeyCode} from '../../const.js';
+import {openModal} from '../modals/photo-upload-result.js';
+import {KeyCode, ModalType} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -24,7 +24,7 @@ const closeButtonHandler = () => {
 };
 
 const keydownHandler = (evt) => {
-  if (evt.key === KeyCode.ESC) {
+  if (evt.key === KeyCode.ESC && !document.querySelector(`.${ModalType.ERROR}`)) {
     closeForm();
   }
 };
@@ -37,11 +37,11 @@ const inputKeydownHandler = (evt) => {
 
 const blockSubmitButton = () => {
   submitButton.setAttribute('disabled', 'true');
-}
+};
 
 const unblockSubmitButton = () => {
   submitButton.removeAttribute('disabled');
-}
+};
 
 // Функция не стрелочная, потому что нужен хойстинг
 function closeForm () {
@@ -81,8 +81,12 @@ const imgUploadHandler = (evt) => {
 
 const handleSuccessfulUploading = () => {
   closeForm();
-  openSuccessModal();
-}
+  openModal(ModalType.SUCCESS);
+};
+
+const handleErrorUploading = () => {
+  openModal(ModalType.ERROR);
+};
 
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
@@ -91,7 +95,7 @@ const formSubmitHandler = (evt) => {
   const isFormValid = validateForm();
   if (isFormValid) {
     const formData = new FormData(evt.target);
-    postNewPhoto(formData, handleSuccessfulUploading);
+    postNewPhoto(formData, handleSuccessfulUploading, handleErrorUploading);
   }
 
   unblockSubmitButton();

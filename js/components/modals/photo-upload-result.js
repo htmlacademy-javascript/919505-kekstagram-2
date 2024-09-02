@@ -1,9 +1,9 @@
 import {KeyCode} from '../../const';
 
-const successTemplate = document.querySelector('#success');
 let modal = null;
 
 const keydownHandler = (evt) => {
+  evt.stopPropagation();
   if (evt.key === KeyCode.ESC) {
     closeModal();
   }
@@ -25,12 +25,13 @@ function closeModal () {
   document.removeEventListener('keydown', keydownHandler);
 }
 
-export const openSuccessModal = () => {
-  const successModal = successTemplate.content.cloneNode(true);
+export const openModal = (modalType) => {
+  const template = document.querySelector(`#${modalType}`);
+  const successModal = template.content.cloneNode(true);
   document.body.appendChild(successModal);
 
-  modal = document.querySelector('.success');
-  const closeButton = document.querySelector('.success__button');
+  modal = document.querySelector(`.${modalType}`);
+  const closeButton = modal.querySelector(`.${modalType}__button`);
 
   closeButton.addEventListener('click', closeButtonHandler);
   modal.addEventListener('click', modalClickHandler);

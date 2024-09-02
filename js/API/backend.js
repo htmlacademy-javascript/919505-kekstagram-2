@@ -17,7 +17,7 @@ export const getPhotoData = (onSuccess) => {
     });
 };
 
-export const postNewPhoto = (data, onSuccess) => {
+export const postNewPhoto = (data, onSuccess, onFailure) => {
   fetch(BASE_URL, {method: 'POST', body: data})
     .then((response) => {
       if (response.ok) {
@@ -25,8 +25,7 @@ export const postNewPhoto = (data, onSuccess) => {
       }
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.error(err);
+    .catch(() => {
+      onFailure();
     });
 };
