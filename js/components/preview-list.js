@@ -1,7 +1,13 @@
 import {createPreview} from './preview-item.js';
+import {initPhotoCard} from './photo-card.js';
 
 const previewListElement = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
+
+/**
+ * @type {Function}
+ */
+const openPhotoCardCallback = initPhotoCard();
 
 const renderPreviews = (photoData) => {
   photoData.forEach((entity) => {
@@ -12,7 +18,7 @@ const renderPreviews = (photoData) => {
   previewListElement.appendChild(fragment);
 };
 
-export const initPreviewList = (photoData, onPreviewClickCallback) => {
+export const initPreviewList = (photoData) => {
   renderPreviews(photoData);
 
   previewListElement.addEventListener('click', (evt) => {
@@ -23,7 +29,7 @@ export const initPreviewList = (photoData, onPreviewClickCallback) => {
       const activePreviewId = activePreview.dataset.photoId;
       const activePreviewData = photoData.find((entity) => entity.id === Number(activePreviewId));
 
-      onPreviewClickCallback(activePreviewData);
+      openPhotoCardCallback(activePreviewData);
     }
   });
 };

@@ -1,6 +1,7 @@
 import {initFromValidator} from './validator.js';
 import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
+import {postNewPhoto} from '../../API/backend.js';
 import {KeyCode} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -68,8 +69,14 @@ const imgUploadHandler = (evt) => {
   }
 };
 
-const formSubmitHandler = () => {
-  validateForm();
+const formSubmitHandler = (evt) => {
+  evt.preventDefault();
+  const isFormValid = validateForm();
+
+  if (isFormValid) {
+    const formData = new FormData(evt.target);
+    postNewPhoto(formData, closeForm);
+  }
 };
 
 export const initUploadForm = () => {
