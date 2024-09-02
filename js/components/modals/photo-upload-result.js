@@ -27,8 +27,8 @@ function closeModal () {
 
 export const openModal = (modalType) => {
   const template = document.querySelector(`#${modalType}`);
-  const successModal = template.content.cloneNode(true);
-  document.body.appendChild(successModal);
+  const clonedModal = template.content.cloneNode(true);
+  document.body.appendChild(clonedModal);
 
   modal = document.querySelector(`.${modalType}`);
   const closeButton = modal.querySelector(`.${modalType}__button`);
