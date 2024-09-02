@@ -1,7 +1,9 @@
 import {initFromValidator} from './validator.js';
 import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
-import {KeyCode} from '../../const.js';
+import {postNewPhoto} from '../../API/backend.js';
+import {openModal} from '../modals/photo-upload-result.js';
+import {KeyCode, ModalType} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -10,6 +12,7 @@ const descriptionInput = form.querySelector('.text__description');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUploadCloseButton = form.querySelector('.img-upload__cancel');
 const imgPreview = form.querySelector('.img-upload__preview img');
+const submitButton = form.querySelector('.img-upload__submit');
 
 /**
  * @type {Function}
@@ -21,7 +24,7 @@ const closeButtonHandler = () => {
 };
 
 const keydownHandler = (evt) => {
-  if (evt.key === KeyCode.ESC) {
+  if (evt.key === KeyCode.ESC && !document.querySelector(`.${ModalType.ERROR}`)) {
     closeForm();
   }
 };
@@ -30,6 +33,14 @@ const inputKeydownHandler = (evt) => {
   if (evt.key === KeyCode.ESC) {
     evt.stopPropagation();
   }
+};
+
+const blockSubmitButton = () => {
+  submitButton.setAttribute('disabled', 'true');
+};
+
+const unblockSubmitButton = () => {
+  submitButton.removeAttribute('disabled');
 };
 
 // Функция не стрелочная, потому что нужен хойстинг
@@ -68,8 +79,26 @@ const imgUploadHandler = (evt) => {
   }
 };
 
-const formSubmitHandler = () => {
-  validateForm();
+const handleSuccessfulUploading = () => {
+  closeForm();
+  openModal(ModalType.SUCCESS);
+};
+
+const handleErrorUploading = () => {
+  openModal(ModalType.ERROR);
+};
+
+const formSubmitHandler = (evt) => {
+  evt.preventDefault();
+  blockSubmitButton();
+
+  const isFormValid = validateForm();
+  if (isFormValid) {
+    const formData = new FormData(evt.target);
+    postNewPhoto(formData, handleSuccessfulUploading, handleErrorUploading);
+  }
+
+  unblockSubmitButton();
 };
 
 export const initUploadForm = () => {
