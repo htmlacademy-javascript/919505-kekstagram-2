@@ -2,6 +2,7 @@ import {initFromValidator} from './validator.js';
 import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
 import {postNewPhoto} from '../../API/backend.js';
+import {openSuccessModal} from '../modals/succes.js';
 import {KeyCode} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -11,6 +12,7 @@ const descriptionInput = form.querySelector('.text__description');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUploadCloseButton = form.querySelector('.img-upload__cancel');
 const imgPreview = form.querySelector('.img-upload__preview img');
+const submitButton = form.querySelector('.img-upload__submit');
 
 /**
  * @type {Function}
@@ -32,6 +34,14 @@ const inputKeydownHandler = (evt) => {
     evt.stopPropagation();
   }
 };
+
+const blockSubmitButton = () => {
+  submitButton.setAttribute('disabled', 'true');
+}
+
+const unblockSubmitButton = () => {
+  submitButton.removeAttribute('disabled');
+}
 
 // Функция не стрелочная, потому что нужен хойстинг
 function closeForm () {
@@ -69,14 +79,22 @@ const imgUploadHandler = (evt) => {
   }
 };
 
+const handleSuccessfulUploading = () => {
+  closeForm();
+  openSuccessModal();
+}
+
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
-  const isFormValid = validateForm();
+  blockSubmitButton();
 
+  const isFormValid = validateForm();
   if (isFormValid) {
     const formData = new FormData(evt.target);
-    postNewPhoto(formData, closeForm);
+    postNewPhoto(formData, handleSuccessfulUploading);
   }
+
+  unblockSubmitButton();
 };
 
 export const initUploadForm = () => {
