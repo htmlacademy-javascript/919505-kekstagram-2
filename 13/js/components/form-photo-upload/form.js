@@ -82,7 +82,7 @@ const handleErrorUploading = () => {
 
 const setSubmitButtonDisabled = (flag) => {
   submitButton.disabled = flag;
-}
+};
 
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
