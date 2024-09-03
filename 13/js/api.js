@@ -20,7 +20,9 @@ export const getPhotoData = (onSuccess, onFailure) => {
     });
 };
 
-export const postNewPhoto = (data, onSuccess, onFailure) => {
+export const postNewPhoto = (data, onSuccess, onFailure, setSubmitButtonDisabled) => {
+  setSubmitButtonDisabled(true);
+
   fetch(BASE_URL, {method: 'POST', body: data})
     .then((response) => {
       if (response.ok) {
@@ -28,7 +30,6 @@ export const postNewPhoto = (data, onSuccess, onFailure) => {
       }
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    .catch(() => {
-      onFailure();
-    });
+    .catch(() => onFailure())
+    .finally(() => setSubmitButtonDisabled(false));
 };
