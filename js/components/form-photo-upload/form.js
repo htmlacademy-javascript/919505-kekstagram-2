@@ -80,17 +80,17 @@ const handleErrorUploading = () => {
   openModal(ModalType.ERROR);
 };
 
+const setSubmitButtonDisabled = (flag) => {
+  submitButton.disabled = flag;
+}
+
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
-  submitButton.disabled = true;
-
   const isFormValid = validateForm();
   if (isFormValid) {
     const formData = new FormData(evt.target);
-    postNewPhoto(formData, handleSuccessfulUploading, handleErrorUploading);
+    postNewPhoto(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
   }
-
-  submitButton.disabled = false;
 };
 
 export const initUploadForm = () => {
