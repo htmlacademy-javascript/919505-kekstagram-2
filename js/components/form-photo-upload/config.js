@@ -3,22 +3,35 @@ export const MAX_DESCRIPTION_LENGTH = 140;
 export const HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
 export const ValidationErrorMessages = {
-  invalidHashtag: 'введён невалидный хэштег',
-  tooManyHashtags: 'превышено количество хэштегов',
-  repeatedHashtags: 'хэштеги повторяются',
-  tooLongComment: 'длина комментария больше 140 символов',
+  INVALID_HASHTAG: 'введён невалидный хэштег',
+  TOO_MANY_HASHTAGS: 'превышено количество хэштегов',
+  REPEATED_HASHTAGS: 'хэштеги повторяются',
+  TOO_LONG_COMMENT: 'длина комментария больше 140 символов',
 };
 
 export const ImgScaleConfig = {
-  min: 25,
-  max: 100,
-  step: 25,
-  initialScale: 100
+  MIN: 25,
+  MAX: 100,
+  STEP: 25,
+  INITIAL_SCALE: 100
 };
 
-export const EffectsConfig = {
+export const pristineConfig = {
+  isLiveValidation: false,
+
+  settings: {
+    classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
+    errorTextParent: 'img-upload__field-wrapper',
+  }
+};
+
+export const effectsConfig = {
   initial : {
-    range: {min: 0, max: 1},
+    range: {
+      min: 0,
+      max: 1
+    },
     start: 0,
     step: 0.1,
     connect: 'lower',
@@ -42,9 +55,12 @@ export const EffectsConfig = {
     filter: 'grayscale',
     postfix: '',
     settings: {
-      range: {min: 0, max: 1},
+      range: {
+        min: 0,
+        max: 1
+      },
       step: 0.1,
-      start: 0,
+      start: 1,
     }
   },
 
@@ -53,9 +69,12 @@ export const EffectsConfig = {
     filter: 'sepia',
     postfix: '',
     settings: {
-      range: {min: 0, max: 1},
+      range: {
+        min: 0,
+        max: 1
+      },
       step: 0.1,
-      start: 0,
+      start: 1,
     },
   },
 
@@ -64,9 +83,12 @@ export const EffectsConfig = {
     filter: 'invert',
     postfix: '%',
     settings: {
-      range: {min: 0, max: 100},
+      range: {
+        min: 0,
+        max: 100
+      },
       step: 1,
-      start: 0,
+      start: 100,
     },
   },
 
@@ -75,9 +97,12 @@ export const EffectsConfig = {
     filter: 'blur',
     postfix: 'px',
     settings: {
-      range: {min: 0, max: 3},
+      range: {
+        min: 0,
+        max: 3
+      },
       step: 0.1,
-      start: 0,
+      start: 3,
     },
   },
 
@@ -86,9 +111,12 @@ export const EffectsConfig = {
     filter: 'brightness',
     postfix: '',
     settings: {
-      range: {min: 1, max: 3},
+      range: {
+        min: 1,
+        max: 3
+      },
       step: 0.1,
-      start: 1,
+      start: 3,
     },
   }
 };

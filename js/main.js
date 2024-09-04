@@ -1,14 +1,10 @@
-import {generatePhotosData} from './data/photos.js';
+import {getPhotoData} from './api.js';
 import {initPreviewList} from './components/preview-list.js';
-import {openPhotoCard} from './components/photo-card.js';
-import {initUploadForm} from './components/form-photo-upload/presenter.js';
+import {initUploadForm} from './components/form-photo-upload/form.js';
+import {openModal as openErrorModal} from './components/modals/previews-download-error.js';
 
-// Собираем данные фотографий в объект
-const photosData = generatePhotosData();
-
-// Рендерим превьюшки
-// Передаем коллбэк openPhotoCard, который будет вызываться при клике на список превьюшек
-initPreviewList(photosData, openPhotoCard);
+//Получаем данные о фото с сервера и рендерим превьюшки
+getPhotoData(initPreviewList, openErrorModal);
 
 // Оживляем форму загрузки фото
 initUploadForm();

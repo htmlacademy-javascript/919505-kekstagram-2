@@ -1,4 +1,4 @@
-import {EffectsConfig} from './config.js';
+import {effectsConfig} from './config.js';
 
 let imgPreview = null;
 let effectSliderContainer = null;
@@ -7,7 +7,7 @@ let effectInputsList = null;
 let effectLevelInput = null;
 
 const updateFilterEffect = (filterName) => {
-  const currentFilterObject = EffectsConfig[filterName];
+  const currentFilterObject = effectsConfig[filterName];
   effectSliderDiv.noUiSlider.updateOptions(currentFilterObject.settings);
 
   effectSliderDiv.noUiSlider.on('update', () => {
@@ -24,35 +24,39 @@ const handleRadioChange = (evt) => {
     const selectedEffect = evt.target.value;
 
     switch (selectedEffect) {
-      case EffectsConfig.chrome.name:
-        updateFilterEffect(EffectsConfig.chrome.name);
+      case effectsConfig.chrome.name:
+        updateFilterEffect(effectsConfig.chrome.name);
         break;
 
-      case EffectsConfig.sepia.name:
-        updateFilterEffect(EffectsConfig.sepia.name);
+      case effectsConfig.sepia.name:
+        updateFilterEffect(effectsConfig.sepia.name);
         break;
 
-      case EffectsConfig.marvin.name:
-        updateFilterEffect(EffectsConfig.marvin.name);
+      case effectsConfig.marvin.name:
+        updateFilterEffect(effectsConfig.marvin.name);
         break;
 
-      case EffectsConfig.phobos.name:
-        updateFilterEffect(EffectsConfig.phobos.name);
+      case effectsConfig.phobos.name:
+        updateFilterEffect(effectsConfig.phobos.name);
         break;
 
-      case EffectsConfig.heat.name:
-        updateFilterEffect(EffectsConfig.heat.name);
+      case effectsConfig.heat.name:
+        updateFilterEffect(effectsConfig.heat.name);
         break;
 
       default:
-        evt.target.value = EffectsConfig.none;
-        effectLevelInput.value = 'none';
-        imgPreview.style.filter = '';
-        effectSliderContainer.classList.add('hidden');
+        resetEffectFilter();
         break;
     }
   }
 };
+
+// Функция не стрелочная, потому что нужен хойстинг
+export function resetEffectFilter () {
+  effectLevelInput.value = 'none';
+  imgPreview.style.filter = '';
+  effectSliderContainer.classList.add('hidden');
+}
 
 export const initEffectFilter = (form, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
@@ -61,7 +65,7 @@ export const initEffectFilter = (form, imgPreviewElem) => {
   effectSliderDiv = form.querySelector('.effect-level__slider');
   effectSliderContainer = form.querySelector('.img-upload__effect-level');
 
-  noUiSlider.create(effectSliderDiv, EffectsConfig.initial);
+  noUiSlider.create(effectSliderDiv, effectsConfig.initial);
 
   effectInputsList.addEventListener('change', handleRadioChange);
   effectSliderContainer.classList.add('hidden');
