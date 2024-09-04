@@ -20,7 +20,7 @@ export const getPhotoData = (onSuccess, onFailure) => {
     });
 };
 
-export const postNewPhoto = (data, onSuccess, onFailure, setSubmitButtonDisabled) => {
+export const postFormData = (data, onSuccess, onFailure, setSubmitButtonDisabled) => {
   setSubmitButtonDisabled(true);
 
   fetch(BASE_URL, {method: 'POST', body: data})
