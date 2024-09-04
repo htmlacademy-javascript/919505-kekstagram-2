@@ -1,7 +1,7 @@
 import {initFromValidator} from './validator.js';
 import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
-import {postNewPhoto} from '../../api.js';
+import {postFormData} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
 import {KeyCode, ModalType} from '../../const.js';
 
@@ -89,7 +89,7 @@ const formSubmitHandler = (evt) => {
   const isFormValid = validateForm();
   if (isFormValid) {
     const formData = new FormData(evt.target);
-    postNewPhoto(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
+    postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
   }
 };
 
