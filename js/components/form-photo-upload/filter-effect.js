@@ -1,6 +1,7 @@
 import {effectsConfig} from './config.js';
 
 let imgPreview = null;
+let effectPreviews = null;
 let effectSliderContainer = null;
 let effectSliderDiv = null;
 let effectInputsList = null;
@@ -58,8 +59,13 @@ export function resetEffectFilter () {
   effectSliderContainer.classList.add('hidden');
 }
 
+export const changeEffectPreviews = (imageSrc) => {
+  effectPreviews.forEach((preview) => {preview.style.backgroundImage = `url(${imageSrc})`});
+}
+
 export const initEffectFilter = (form, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
+  effectPreviews = form.querySelectorAll('.effects__preview');
   effectInputsList = form.querySelector('.effects__list');
   effectLevelInput = form.querySelector('.effect-level__value');
   effectSliderDiv = form.querySelector('.effect-level__slider');

@@ -1,5 +1,5 @@
 import {initFromValidator} from './validator.js';
-import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
+import {initEffectFilter, resetEffectFilter, changeEffectPreviews} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
 import {postFormData} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
@@ -64,9 +64,9 @@ const imgUploadHandler = (evt) => {
     const reader = new FileReader();
     reader.addEventListener('load', (e) => {
       imgPreview.src = e.target.result;
+      changeEffectPreviews(e.target.result);
     });
     reader.readAsDataURL(file);
-
     openForm();
   }
 };

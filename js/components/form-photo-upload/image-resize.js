@@ -1,25 +1,31 @@
 import {ImgScaleConfig} from './config.js';
+const HUNDRED_PERCENT = 100;
 
 let form = null;
 let imgPreview = null;
 let scalePanel = null;
 let scaleControl = null;
+let currentScale = ImgScaleConfig.INITIAL_SCALE;
 
 const changeImgScale = (scale) => {
-  const computedScale = scale / 100;
+  const computedScale = scale / HUNDRED_PERCENT;
 
   imgPreview.style.transform = `scale(${computedScale})`;
   scaleControl.value = `${scale}%`;
   scaleControl.setAttribute('value', `${scale}%`);
 };
 
-const changeScaleHandler = (evt) => {
-  const currentScale = Number(scaleControl.value.slice(0, scaleControl.value.length - 1));
+const decreaseScaleHandler = () => {
+  if (currentScale > ImgScaleConfig.MIN) {
+    currentScale = currentScale - ImgScaleConfig.STEP;
+    changeImgScale(currentScale);
+  }
+};
 
-  if (evt.target.matches('.scale__control--smaller') && currentScale > ImgScaleConfig.MIN) {
-    changeImgScale(currentScale - ImgScaleConfig.STEP);
-  } else if (evt.target.matches('.scale__control--bigger') && currentScale < ImgScaleConfig.MAX) {
-    changeImgScale(currentScale + ImgScaleConfig.STEP);
+const increaseScaleHandler = () => {
+  if (currentScale < ImgScaleConfig.MAX) {
+    currentScale = currentScale + ImgScaleConfig.STEP;
+    changeImgScale(currentScale);
   }
 };
 
@@ -30,5 +36,10 @@ export const initImageResize = (formElem, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
   scalePanel = form.querySelector('.img-upload__scale');
   scaleControl = scalePanel.querySelector('.scale__control--value');
-  scalePanel.addEventListener('click', changeScaleHandler);
+
+  const decreaseScaleButton = scalePanel.querySelector('.scale__control--smaller');
+  const increaseScaleButton = scalePanel.querySelector('.scale__control--bigger');
+
+  decreaseScaleButton.addEventListener('click', decreaseScaleHandler);
+  increaseScaleButton.addEventListener('click', increaseScaleHandler);
 };
