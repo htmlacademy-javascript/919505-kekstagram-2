@@ -3,7 +3,7 @@ import {initEffectFilter, resetEffectFilter, changeEffectPreviews} from './filte
 import {initImageResize, resetImgScale} from './image-resize.js';
 import {postFormData} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
-import {KeyCode, ModalType} from '../../const.js';
+import {KeyCode, ModalType, SubmitButtonText} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -82,6 +82,10 @@ const handleErrorUploading = () => {
 
 const setSubmitButtonDisabled = (flag) => {
   submitButton.disabled = flag;
+
+  flag === true
+    ? submitButton.textContent = SubmitButtonText.LOADING
+    : submitButton.textContent = SubmitButtonText.IDLE;
 };
 
 const formSubmitHandler = (evt) => {
@@ -89,7 +93,7 @@ const formSubmitHandler = (evt) => {
   const isFormValid = validateForm();
   if (isFormValid) {
     const formData = new FormData(evt.target);
-    postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
+    void postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
   }
 };
 
