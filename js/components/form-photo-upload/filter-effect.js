@@ -6,6 +6,7 @@ let effectSliderContainer = null;
 let effectSliderDiv = null;
 let effectInputsList = null;
 let effectLevelInput = null;
+let initialRadioInput = null;
 
 const updateFilterEffect = (filterName) => {
   const currentFilterObject = effectsConfig[filterName];
@@ -54,14 +55,17 @@ const handleRadioChange = (evt) => {
 
 // Функция не стрелочная, потому что нужен хойстинг
 export function resetEffectFilter () {
+  initialRadioInput.checked = true;
   effectLevelInput.value = 'none';
   imgPreview.style.filter = '';
   effectSliderContainer.classList.add('hidden');
 }
 
 export const changeEffectPreviews = (imageSrc) => {
-  effectPreviews.forEach((preview) => {preview.style.backgroundImage = `url(${imageSrc})`});
-}
+  effectPreviews.forEach((preview) => {
+    preview.style.backgroundImage = `url(${imageSrc})`;
+  });
+};
 
 export const initEffectFilter = (form, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
@@ -70,6 +74,7 @@ export const initEffectFilter = (form, imgPreviewElem) => {
   effectLevelInput = form.querySelector('.effect-level__value');
   effectSliderDiv = form.querySelector('.effect-level__slider');
   effectSliderContainer = form.querySelector('.img-upload__effect-level');
+  initialRadioInput = form.querySelector('#effect-none');
 
   noUiSlider.create(effectSliderDiv, effectsConfig.initial);
 

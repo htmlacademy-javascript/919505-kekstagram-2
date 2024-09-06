@@ -65,9 +65,9 @@ const imgUploadHandler = (evt) => {
     reader.addEventListener('load', (e) => {
       imgPreview.src = e.target.result;
       changeEffectPreviews(e.target.result);
+      openForm();
     });
     reader.readAsDataURL(file);
-    openForm();
   }
 };
 
@@ -83,9 +83,11 @@ const handleErrorUploading = () => {
 const setSubmitButtonDisabled = (flag) => {
   submitButton.disabled = flag;
 
-  flag === true
-    ? submitButton.textContent = SubmitButtonText.LOADING
-    : submitButton.textContent = SubmitButtonText.IDLE;
+  if (flag) {
+    submitButton.textContent = SubmitButtonText.LOADING;
+  } else {
+    submitButton.textContent = SubmitButtonText.IDLE;
+  }
 };
 
 const formSubmitHandler = (evt) => {
