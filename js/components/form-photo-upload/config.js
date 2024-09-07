@@ -51,7 +51,6 @@ export const effectsConfig = {
   none: 'none',
 
   chrome: {
-    name: 'chrome',
     filter: 'grayscale',
     postfix: '',
     settings: {
@@ -65,7 +64,6 @@ export const effectsConfig = {
   },
 
   sepia: {
-    name: 'sepia',
     filter: 'sepia',
     postfix: '',
     settings: {
@@ -79,7 +77,6 @@ export const effectsConfig = {
   },
 
   marvin:  {
-    name: 'marvin',
     filter: 'invert',
     postfix: '%',
     settings: {
@@ -93,7 +90,6 @@ export const effectsConfig = {
   },
 
   phobos: {
-    name: 'phobos',
     filter: 'blur',
     postfix: 'px',
     settings: {
@@ -107,7 +103,6 @@ export const effectsConfig = {
   },
 
   heat: {
-    name: 'heat',
     filter: 'brightness',
     postfix: '',
     settings: {
