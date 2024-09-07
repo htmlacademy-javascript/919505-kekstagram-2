@@ -1,5 +1,5 @@
 import {getPhotoData} from './api.js';
-import {initPreviewFilter} from './components/preview-filter';
+import {initPreviewFilter} from './components/preview-filter.js';
 import {initPreviewList, renderPreviews, clearPreviewList} from './components/preview-list.js';
 import {initUploadForm} from './components/form-photo-upload/form.js';
 import {openModal as openErrorModal} from './components/modals/previews-download-error.js';
