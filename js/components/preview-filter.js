@@ -1,4 +1,5 @@
 import {getRandomElementsFromArray} from '../utils.js';
+import {debounce} from '../debounce.js';
 
 const RANDOM_PREVIEWS_QUANTITY = 10;
 
@@ -23,23 +24,26 @@ const rerenderPreviews = (data) => {
   renderPreviewList(data);
 };
 
+/**
+ * @type {Function}
+ */
+const renderWithDebounce = debounce(rerenderPreviews);
+
 const defaultPreviewsClickHandler = () => {
   changeActiveButton(defaultPreviewsButton);
-  rerenderPreviews(photoData);
+  renderWithDebounce(photoData);
 };
 
 const randomPreviewsClickHandler = () => {
   changeActiveButton(randomPreviewsButton);
-
   const newPreviewsArray = getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY);
-  rerenderPreviews(newPreviewsArray);
+  renderWithDebounce(newPreviewsArray);
 };
 
 const discussedPreviewsClickHandler = () => {
   changeActiveButton(discussedPreviewsButton);
-
   const newPreviewsArray = photoData.slice().sort((a, b) => b.comments.length - a.comments.length);
-  rerenderPreviews(newPreviewsArray);
+  renderWithDebounce(newPreviewsArray);
 };
 
 
