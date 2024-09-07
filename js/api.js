@@ -1,35 +1,37 @@
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
 const Route = {
-  GET_DATA: '/data'
+  GET_DATA: '/data',
+  POST_DATA: '/'
 };
 
-export const getPhotoData = (onSuccess, onFailure) => {
-  fetch(`${BASE_URL}${Route.GET_DATA}`)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(`${response.status} ${response.statusText}`);
-    })
-    .then((photosData) => {
-      onSuccess(photosData);
-    })
-    .catch((err) => {
-      onFailure(err.message);
-    });
+const Method = {
+  GET: 'GET',
+  POST: 'POST'
 };
 
-export const postFormData = (data, onSuccess, onFailure, setSubmitButtonDisabled) => {
+const load = async (route, method = Method.GET, body = null) => {
+  const response = await fetch(`${BASE_URL}${route}`, {method, body});
+  return response.ok ? await response.json() : Promise.reject(`${response.status} ${response.statusText}`);
+};
+
+export const getPhotoData = async (onSuccess, onFailure) => {
+  try {
+    const data = await load(Route.GET_DATA);
+    onSuccess(data);
+  } catch (error) {
+    onFailure(error);
+  }
+};
+
+export const postFormData = async (data, onSuccess, onFailure, setSubmitButtonDisabled) => {
   setSubmitButtonDisabled(true);
-
-  fetch(BASE_URL, {method: 'POST', body: data})
-    .then((response) => {
-      if (response.ok) {
-        return onSuccess();
-      }
-      throw new Error(`${response.status} ${response.statusText}`);
-    })
-    .catch(() => onFailure())
-    .finally(() => setSubmitButtonDisabled(false));
+  try {
+    await load(Route.POST_DATA, Method.POST, data);
+    onSuccess();
+  } catch {
+    onFailure();
+  } finally {
+    setSubmitButtonDisabled(false);
+  }
 };

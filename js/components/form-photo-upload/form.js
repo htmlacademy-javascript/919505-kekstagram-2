@@ -1,9 +1,9 @@
 import {initFromValidator} from './validator.js';
-import {initEffectFilter, resetEffectFilter} from './filter-effect.js';
+import {initEffectFilter, resetEffectFilter, changeEffectPreviews} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
 import {postFormData} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
-import {KeyCode, ModalType} from '../../const.js';
+import {KeyCode, ModalType, SubmitButtonText} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -64,10 +64,10 @@ const imgUploadHandler = (evt) => {
     const reader = new FileReader();
     reader.addEventListener('load', (e) => {
       imgPreview.src = e.target.result;
+      changeEffectPreviews(e.target.result);
+      openForm();
     });
     reader.readAsDataURL(file);
-
-    openForm();
   }
 };
 
@@ -82,6 +82,12 @@ const handleErrorUploading = () => {
 
 const setSubmitButtonDisabled = (flag) => {
   submitButton.disabled = flag;
+
+  if (flag) {
+    submitButton.textContent = SubmitButtonText.LOADING;
+  } else {
+    submitButton.textContent = SubmitButtonText.IDLE;
+  }
 };
 
 const formSubmitHandler = (evt) => {
@@ -89,7 +95,7 @@ const formSubmitHandler = (evt) => {
   const isFormValid = validateForm();
   if (isFormValid) {
     const formData = new FormData(evt.target);
-    postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
+    void postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
   }
 };
 
