@@ -46,7 +46,6 @@ const discussedPreviewsClickHandler = () => {
   renderWithDebounce(newPreviewsArray);
 };
 
-
 export const initPreviewFilter = (data, renderPreviewListCallback, clearPreviewsListCallback) => {
   photoData = data;
   renderPreviewList = renderPreviewListCallback;
