@@ -1,5 +1,6 @@
 import {createComment} from './comment-item.js';
-import {COMMENTS_STEP} from '../const.js';
+
+const COMMENTS_STEP = 5;
 
 const shownCommentsElement = document.querySelector('.social__comment-shown-count');
 const totalCommentsElement = document.querySelector('.social__comment-total-count');
