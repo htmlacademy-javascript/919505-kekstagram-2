@@ -9,6 +9,7 @@ const randomPreviewsButton = previewFilterElement.querySelector('#filter-random'
 const discussedPreviewsButton = previewFilterElement.querySelector('#filter-discussed');
 
 let photoData = [];
+let photoDataSortedByComments = [];
 let renderPreviewList = null;
 let clearPreviewList = null;
 let currentActiveButton = defaultPreviewsButton;
@@ -42,12 +43,13 @@ const randomPreviewsClickHandler = () => {
 
 const discussedPreviewsClickHandler = () => {
   changeActiveButton(discussedPreviewsButton);
-  const newPreviewsArray = photoData.slice().sort((a, b) => b.comments.length - a.comments.length);
-  renderWithDebounce(newPreviewsArray);
+  renderWithDebounce(photoDataSortedByComments);
 };
 
 export const initPreviewFilter = (data, renderPreviewListCallback, clearPreviewsListCallback) => {
   photoData = data;
+  photoDataSortedByComments = photoData.slice().sort((a, b) => b.comments.length - a.comments.length);
+
   renderPreviewList = renderPreviewListCallback;
   clearPreviewList = clearPreviewsListCallback;
 
