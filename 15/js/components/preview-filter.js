@@ -1,6 +1,6 @@
-import {getRandomElementsFromArray} from '../utils.js';
-import {debounce} from '../debounce.js';
+import {debounce, getRandomElementsFromArray} from '../utils.js';
 
+const DEBOUNCE_DELAY = 500;
 const RANDOM_PREVIEWS_QUANTITY = 10;
 
 const previewFilterElement = document.querySelector('.img-filters');
@@ -35,7 +35,7 @@ const discussedPreviewsClickHandler = () => {
 
 export const initPreviewFilter = (data, refreshPreviews) => {
   photoData = data;
-  renderWithDebounce = debounce((cb) => refreshPreviews(cb()));
+  renderWithDebounce = debounce((cb) => refreshPreviews(cb()), DEBOUNCE_DELAY);
 
   previewFilterElement.classList.remove('img-filters--inactive');
 
