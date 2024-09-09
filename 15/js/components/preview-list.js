@@ -9,7 +9,7 @@ const fragment = document.createDocumentFragment();
  */
 const openPhotoCardCallback = initPhotoCard();
 
-export const renderPreviews = (photoData) => {
+const renderPreviews = (photoData) => {
   photoData.forEach((entity) => {
     const newPreview = createPreview(entity);
     fragment.appendChild(newPreview);
@@ -18,10 +18,15 @@ export const renderPreviews = (photoData) => {
   previewListElement.appendChild(fragment);
 };
 
-export const clearPreviewList = () => {
+const clearPreviewList = () => {
   const previews = document.querySelectorAll('.picture');
 
   previews.forEach((preview) => preview.remove());
+};
+
+export const refreshPreviews = (data) => {
+  clearPreviewList();
+  renderPreviews(data);
 };
 
 export const initPreviewList = (photoData) => {
