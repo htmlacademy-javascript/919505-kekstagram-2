@@ -9,7 +9,7 @@ const randomPreviewsButton = previewFilterElement.querySelector('#filter-random'
 const discussedPreviewsButton = previewFilterElement.querySelector('#filter-discussed');
 
 let photoData = [];
-let renderWithDebounce = null;
+let renderWithDebounce = () => {};
 let currentActiveButton = defaultPreviewsButton;
 
 const changeActiveButton = (newActiveButton) => {
@@ -20,24 +20,22 @@ const changeActiveButton = (newActiveButton) => {
 
 const defaultPreviewsClickHandler = () => {
   changeActiveButton(defaultPreviewsButton);
-  renderWithDebounce(photoData);
+  renderWithDebounce(() => photoData);
 };
 
 const randomPreviewsClickHandler = () => {
   changeActiveButton(randomPreviewsButton);
-  const newPreviewsArray = getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY);
-  renderWithDebounce(newPreviewsArray);
+  renderWithDebounce(() => getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY));
 };
 
 const discussedPreviewsClickHandler = () => {
   changeActiveButton(discussedPreviewsButton);
-  const newPreviewsArray = photoData.slice().sort((a, b) => b.comments.length - a.comments.length);
-  renderWithDebounce(newPreviewsArray);
+  renderWithDebounce(() => photoData.slice().sort((a, b) => b.comments.length - a.comments.length));
 };
 
-export const initPreviewFilter = (data, refreshPreviewsCallback) => {
+export const initPreviewFilter = (data, refreshPreviews) => {
   photoData = data;
-  renderWithDebounce = debounce(refreshPreviewsCallback);
+  renderWithDebounce = debounce((cb) => refreshPreviews(cb()));
 
   previewFilterElement.classList.remove('img-filters--inactive');
 
