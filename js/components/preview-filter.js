@@ -1,6 +1,6 @@
-import {getRandomElementsFromArray} from '../utils.js';
-import {debounce} from '../debounce.js';
+import {debounce, getRandomElementsFromArray} from '../utils.js';
 
+const DEBOUNCE_DELAY = 500;
 const RANDOM_PREVIEWS_QUANTITY = 10;
 
 const previewFilterElement = document.querySelector('.img-filters');
@@ -9,8 +9,7 @@ const randomPreviewsButton = previewFilterElement.querySelector('#filter-random'
 const discussedPreviewsButton = previewFilterElement.querySelector('#filter-discussed');
 
 let photoData = [];
-let renderPreviewList = null;
-let clearPreviewList = null;
+let renderWithDebounce = () => {};
 let currentActiveButton = defaultPreviewsButton;
 
 const changeActiveButton = (newActiveButton) => {
@@ -19,37 +18,24 @@ const changeActiveButton = (newActiveButton) => {
   currentActiveButton = newActiveButton;
 };
 
-const rerenderPreviews = (data) => {
-  clearPreviewList();
-  renderPreviewList(data);
-};
-
-/**
- * @type {Function}
- */
-const renderWithDebounce = debounce(rerenderPreviews);
-
 const defaultPreviewsClickHandler = () => {
   changeActiveButton(defaultPreviewsButton);
-  renderWithDebounce(photoData);
+  renderWithDebounce(() => photoData);
 };
 
 const randomPreviewsClickHandler = () => {
   changeActiveButton(randomPreviewsButton);
-  const newPreviewsArray = getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY);
-  renderWithDebounce(newPreviewsArray);
+  renderWithDebounce(() => getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY));
 };
 
 const discussedPreviewsClickHandler = () => {
   changeActiveButton(discussedPreviewsButton);
-  const newPreviewsArray = photoData.slice().sort((a, b) => b.comments.length - a.comments.length);
-  renderWithDebounce(newPreviewsArray);
+  renderWithDebounce(() => photoData.slice().sort((a, b) => b.comments.length - a.comments.length));
 };
 
-export const initPreviewFilter = (data, renderPreviewListCallback, clearPreviewsListCallback) => {
+export const initPreviewFilter = (data, refreshPreviews) => {
   photoData = data;
-  renderPreviewList = renderPreviewListCallback;
-  clearPreviewList = clearPreviewsListCallback;
+  renderWithDebounce = debounce((cb) => refreshPreviews(cb()), DEBOUNCE_DELAY);
 
   previewFilterElement.classList.remove('img-filters--inactive');
 
