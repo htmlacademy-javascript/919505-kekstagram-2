@@ -17,7 +17,7 @@ export const ImgScaleConfig = {
 };
 
 export const pristineConfig = {
-  isLiveValidation: false,
+  isLiveValidation: true,
 
   settings: {
     classTo: 'img-upload__field-wrapper',

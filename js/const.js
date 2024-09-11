@@ -1,3 +1,5 @@
+export const IMAGE_TYPES = ['jpg', 'jpeg', 'png'];
+
 export const KeyCode = {
   ESC: 'Escape',
 };

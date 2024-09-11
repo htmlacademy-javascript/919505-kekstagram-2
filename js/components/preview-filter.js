@@ -20,24 +20,26 @@ const changeActiveButton = (newActiveButton) => {
 
 const defaultPreviewsClickHandler = () => {
   changeActiveButton(defaultPreviewsButton);
-  renderWithDebounce(() => photoData);
+  renderWithDebounce(photoData);
 };
 
 const randomPreviewsClickHandler = () => {
   changeActiveButton(randomPreviewsButton);
-  renderWithDebounce(() => getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY));
+  renderWithDebounce(getRandomElementsFromArray(photoData, RANDOM_PREVIEWS_QUANTITY));
 };
 
 const discussedPreviewsClickHandler = () => {
   changeActiveButton(discussedPreviewsButton);
-  renderWithDebounce(() => photoData.slice().sort((a, b) => b.comments.length - a.comments.length));
+  renderWithDebounce(photoData.slice().sort((a, b) => b.comments.length - a.comments.length));
 };
 
-export const initPreviewFilter = (data, refreshPreviews) => {
+export const getNewDataForFilter = (data) => {
   photoData = data;
-  renderWithDebounce = debounce((cb) => refreshPreviews(cb()), DEBOUNCE_DELAY);
-
   previewFilterElement.classList.remove('img-filters--inactive');
+};
+
+export const initPreviewFilter = (refreshPreviews) => {
+  renderWithDebounce = debounce(refreshPreviews, DEBOUNCE_DELAY);
 
   defaultPreviewsButton.addEventListener('click', defaultPreviewsClickHandler);
   randomPreviewsButton.addEventListener('click', randomPreviewsClickHandler);
