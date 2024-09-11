@@ -6,6 +6,7 @@ import {
   ValidationErrorMessages
 } from './config.js';
 
+let form = null;
 let hashtagsInput = null;
 let descriptionInput = null;
 
@@ -23,23 +24,24 @@ const addHashtagError = (newError) => {
 
 const validateHashtags = () => {
   currentHashtagErrors = '';
-  const inputString = hashtagsInput.value;
 
-  if (!inputString) {
+  if (!hashtagsInput.value) {
     return true;
   }
 
   let isValid = true;
 
-  const hashtagsArray = hashtagsInput.value.trim().toLowerCase().split(' ');
+  const hashtagsArray = hashtagsInput.value.toLowerCase().split(' ');
+  const filteredHashtagsArray = hashtagsArray.filter((hashtag) => hashtag !== '');
+
   const hashtagSet = new Set();
 
-  if (hashtagsArray.length > MAX_HASHTAGS_AMOUNT) {
+  if (filteredHashtagsArray.length > MAX_HASHTAGS_AMOUNT) {
     addHashtagError(ValidationErrorMessages.TOO_MANY_HASHTAGS);
     isValid = false;
   }
 
-  hashtagsArray.forEach((hashtag) => {
+  filteredHashtagsArray.forEach((hashtag) => {
     if (!HASHTAG_REGEXP.test(hashtag)) {
       addHashtagError(ValidationErrorMessages.INVALID_HASHTAG);
       isValid = false;
@@ -58,7 +60,13 @@ const validateHashtags = () => {
 
 const validateDescription = () => descriptionInput.value.length <= MAX_DESCRIPTION_LENGTH;
 
+export const removeErrors = () => {
+  const errorElements = form.querySelectorAll('.pristine-error');
+  errorElements.forEach((element) => element.remove());
+};
+
 export const initFromValidator = (formElem, hashtagsInputElem, descriptionInputElem) => {
+  form = formElem;
   hashtagsInput = hashtagsInputElem;
   descriptionInput = descriptionInputElem;
 

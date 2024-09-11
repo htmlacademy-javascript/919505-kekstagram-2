@@ -1,9 +1,9 @@
-import {initFromValidator} from './validator.js';
+import {initFromValidator, removeErrors} from './validator.js';
 import {initEffectFilter, resetEffectFilter, changeEffectPreviews} from './filter-effect.js';
 import {initImageResize, resetImgScale} from './image-resize.js';
 import {postFormData} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
-import {KeyCode, ModalType, SubmitButtonText} from '../../const.js';
+import {KeyCode, ModalType, SubmitButtonText, IMAGE_TYPES} from '../../const.js';
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -39,6 +39,7 @@ const inputKeydownHandler = (evt) => {
 function closeForm () {
   resetImgScale();
   resetEffectFilter();
+  removeErrors();
 
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -57,17 +58,15 @@ const openForm = () => {
   document.addEventListener('keydown', keydownHandler);
 };
 
-const imgUploadHandler = (evt) => {
-  const file = evt.target.files[0];
+const imgUploadHandler = () => {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = IMAGE_TYPES.some((type) => fileName.endsWith(type));
 
-  if (file) {
-    const reader = new FileReader();
-    reader.addEventListener('load', (e) => {
-      imgPreview.src = e.target.result;
-      changeEffectPreviews(e.target.result);
-      openForm();
-    });
-    reader.readAsDataURL(file);
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+    changeEffectPreviews(imgPreview.src);
+    openForm();
   }
 };
 
@@ -94,7 +93,8 @@ const formSubmitHandler = (evt) => {
   evt.preventDefault();
   const isFormValid = validateForm();
   if (isFormValid) {
-    const formData = new FormData(evt.target);
+    removeErrors();
+    const formData = new FormData(form);
     void postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
   }
 };
@@ -107,5 +107,5 @@ export const initUploadForm = () => {
   imgUploadCloseButton.addEventListener('click', closeButtonHandler);
   hashtagsInput.addEventListener('keydown', inputKeydownHandler);
   descriptionInput.addEventListener('keydown', inputKeydownHandler);
-  form.addEventListener('submit', formSubmitHandler);
+  submitButton.addEventListener('click', formSubmitHandler);
 };
