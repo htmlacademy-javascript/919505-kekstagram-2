@@ -1,5 +1,6 @@
 import {createPreview} from './preview-item.js';
 import {initPhotoCard} from './photo-card.js';
+import {getPhotos} from '../store/photos.js';
 
 const previewListElement = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
@@ -19,9 +20,9 @@ const renderPreviews = (photoData) => {
 };
 
 const clearPreviewList = () => {
-  const previews = document.querySelectorAll('.picture');
+  const previewElements = document.querySelectorAll('.picture');
 
-  previews.forEach((preview) => preview.remove());
+  previewElements.forEach((preview) => preview.remove());
 };
 
 export const refreshPreviews = (data) => {
@@ -29,7 +30,8 @@ export const refreshPreviews = (data) => {
   renderPreviews(data);
 };
 
-export const initPreviewList = (photoData) => {
+export const initPreviewList = () => {
+  const photoData = getPhotos();
   renderPreviews(photoData);
 
   previewListElement.addEventListener('click', (evt) => {

@@ -1,19 +1,19 @@
 import {initComments, closeComments} from './comment-list.js';
 import {KeyCode} from '../const.js';
 
-const photoCard = document.querySelector('.big-picture');
-const closeButton = photoCard.querySelector('.big-picture__cancel');
-const imgElement = photoCard.querySelector('.big-picture__img img');
-const likesElement = photoCard.querySelector('.likes-count');
-const descriptionElement = photoCard.querySelector('.social__caption');
+const photoCardElement = document.querySelector('.big-picture');
+const closeElement = photoCardElement.querySelector('.big-picture__cancel');
+const imageElement = photoCardElement.querySelector('.big-picture__img img');
+const likesElement = photoCardElement.querySelector('.likes-count');
+const captionElement = photoCardElement.querySelector('.social__caption');
 
 const updateCardContent = (data) => {
   const {url, likes, description, comments} = data;
 
-  imgElement.src = url;
-  imgElement.alt = description;
+  imageElement.src = url;
+  imageElement.alt = description;
   likesElement.textContent = likes;
-  descriptionElement.textContent = description;
+  captionElement.textContent = description;
 
   initComments(comments);
 };
@@ -35,19 +35,19 @@ function closePhotoCard () {
 
   closeComments();
 
-  photoCard.classList.add('hidden');
+  photoCardElement.classList.add('hidden');
 }
 
 const openPhotoCard = (data) => {
   updateCardContent(data);
 
-  photoCard.classList.remove('hidden');
+  photoCardElement.classList.remove('hidden');
 
   document.addEventListener('keydown', keydownHandler);
   document.body.classList.add('modal-open');
 };
 
 export const initPhotoCard = () => {
-  closeButton.addEventListener('click', closeButtonHandler);
+  closeElement.addEventListener('click', closeButtonHandler);
   return openPhotoCard;
 };

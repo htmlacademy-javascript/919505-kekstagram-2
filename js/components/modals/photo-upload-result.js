@@ -1,6 +1,6 @@
 import {KeyCode} from '../../const.js';
 
-let modal = null;
+let modalElement = null;
 
 const keydownHandler = (evt) => {
   evt.stopPropagation();
@@ -10,8 +10,8 @@ const keydownHandler = (evt) => {
 };
 
 const modalClickHandler = (evt) => {
-  if (evt.target === modal) {
-    modal.remove();
+  if (evt.target === modalElement) {
+    modalElement.remove();
   }
 };
 
@@ -21,19 +21,19 @@ const closeButtonHandler = () => {
 
 // Функция не стрелочная, потому что нужен хойстинг
 function closeModal () {
-  modal.remove();
+  modalElement.remove();
   document.removeEventListener('keydown', keydownHandler);
 }
 
 export const openModal = (modalType) => {
-  const template = document.querySelector(`#${modalType}`);
-  const clonedModal = template.content.cloneNode(true);
+  const template = document.querySelector(`#${modalType}`).content;
+  const clonedModal = template.cloneNode(true);
   document.body.appendChild(clonedModal);
 
-  modal = document.querySelector(`.${modalType}`);
-  const closeButton = modal.querySelector(`.${modalType}__button`);
+  modalElement = document.querySelector(`.${modalType}`);
+  const closeElement = modalElement.querySelector(`.${modalType}__button`);
 
-  closeButton.addEventListener('click', closeButtonHandler);
-  modal.addEventListener('click', modalClickHandler);
+  closeElement.addEventListener('click', closeButtonHandler);
+  modalElement.addEventListener('click', modalClickHandler);
   document.addEventListener('keydown', keydownHandler);
 };
