@@ -5,7 +5,7 @@ import {initUploadForm} from './components/form-photo-upload/form.js';
 import {openModal as openErrorModal} from './components/modals/previews-download-error.js';
 import {setPhotos} from './store/photos.js';
 
-// Оживляет кнопки фильтра
+// Оживляем кнопки фильтра
 initPreviewFilter(refreshPreviews);
 
 // Коллбэк, который, в случае успешного получения фотографий, рендерит превьюшки и показывает фильтр
