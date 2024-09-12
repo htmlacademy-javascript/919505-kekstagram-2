@@ -34,7 +34,7 @@ const discussedPreviewsClickHandler = () => {
   renderWithDebounce(photoData.slice().sort((a, b) => b.comments.length - a.comments.length));
 };
 
-export const showFilter = () => {
+export const showPreviewFilter = () => {
   photoData = getPhotos();
   previewFilterElement.classList.remove('img-filters--inactive');
 };

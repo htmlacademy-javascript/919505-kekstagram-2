@@ -1,5 +1,5 @@
 import {getPhotoData} from './api.js';
-import {initPreviewFilter, showFilter} from './components/preview-filter.js';
+import {initPreviewFilter, showPreviewFilter} from './components/preview-filter.js';
 import {initPreviewList, refreshPreviews} from './components/preview-list.js';
 import {initUploadForm} from './components/form-photo-upload/form.js';
 import {openModal as openErrorModal} from './components/modals/previews-download-error.js';
@@ -12,7 +12,7 @@ initPreviewFilter(refreshPreviews);
 const handleSuccessPhotoData = (photoData) => {
   setPhotos(photoData);
   initPreviewList();
-  showFilter();
+  showPreviewFilter();
 };
 
 // Получаем данные о фото с сервера
