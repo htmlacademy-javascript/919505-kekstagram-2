@@ -1,23 +1,23 @@
 import {effectsConfig} from './config.js';
 
 let imgPreview = null;
-let effectPreviews = null;
-let effectSliderContainer = null;
-let effectSliderDiv = null;
-let effectInputsList = null;
-let effectLevelInput = null;
-let initialRadioInput = null;
+let effectPreviewElements = null;
+let effectLevelElement = null;
+let effectSliderElement = null;
+let effectInputsListElement = null;
+let effectLevelInputElement = null;
+let initialRadioInputElement = null;
 
 const updateFilterEffect = (filterObject) => {
-  effectSliderDiv.noUiSlider.updateOptions(filterObject.settings);
+  effectSliderElement.noUiSlider.updateOptions(filterObject.settings);
 
-  effectSliderDiv.noUiSlider.on('update', () => {
-    const effectLevel = effectSliderDiv.noUiSlider.get();
+  effectSliderElement.noUiSlider.on('update', () => {
+    const effectLevel = effectSliderElement.noUiSlider.get();
     imgPreview.style.filter = `${filterObject.filter}(${effectLevel}${filterObject.postfix})`;
-    effectLevelInput.value = effectLevel;
+    effectLevelInputElement.value = effectLevel;
   });
 
-  effectSliderContainer.classList.remove('hidden');
+  effectLevelElement.classList.remove('hidden');
 };
 
 const handleRadioChange = (evt) => {
@@ -35,29 +35,29 @@ const handleRadioChange = (evt) => {
 
 // Функция не стрелочная, потому что нужен хойстинг
 export function resetEffectFilter () {
-  initialRadioInput.checked = true;
-  effectLevelInput.value = 'none';
+  initialRadioInputElement.checked = true;
+  effectLevelInputElement.value = 'none';
   imgPreview.style.filter = '';
-  effectSliderContainer.classList.add('hidden');
+  effectLevelElement.classList.add('hidden');
 }
 
 export const changeEffectPreviews = (imageSrc) => {
-  effectPreviews.forEach((preview) => {
+  effectPreviewElements.forEach((preview) => {
     preview.style.backgroundImage = `url(${imageSrc})`;
   });
 };
 
 export const initEffectFilter = (form, imgPreviewElem) => {
   imgPreview = imgPreviewElem;
-  effectPreviews = form.querySelectorAll('.effects__preview');
-  effectInputsList = form.querySelector('.effects__list');
-  effectLevelInput = form.querySelector('.effect-level__value');
-  effectSliderDiv = form.querySelector('.effect-level__slider');
-  effectSliderContainer = form.querySelector('.img-upload__effect-level');
-  initialRadioInput = form.querySelector('#effect-none');
+  effectPreviewElements = form.querySelectorAll('.effects__preview');
+  effectInputsListElement = form.querySelector('.effects__list');
+  effectLevelInputElement = form.querySelector('.effect-level__value');
+  effectSliderElement = form.querySelector('.effect-level__slider');
+  effectLevelElement = form.querySelector('.img-upload__effect-level');
+  initialRadioInputElement = form.querySelector('#effect-none');
 
-  noUiSlider.create(effectSliderDiv, effectsConfig.initial);
+  noUiSlider.create(effectSliderElement, effectsConfig.initial);
 
-  effectInputsList.addEventListener('change', handleRadioChange);
-  effectSliderContainer.classList.add('hidden');
+  effectInputsListElement.addEventListener('change', handleRadioChange);
+  effectLevelElement.classList.add('hidden');
 };

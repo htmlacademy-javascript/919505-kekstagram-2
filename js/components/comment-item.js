@@ -5,12 +5,12 @@ export const createComment = (data) => {
   const {avatar, name, message} = data;
 
   const newComment = commentTemplate.cloneNode(true);
-  const imgElement = newComment.querySelector('.social__picture');
-  const textElement = newComment.querySelector('.social__text');
+  const image = newComment.querySelector('.social__picture');
+  const textContainer = newComment.querySelector('.social__text');
 
-  imgElement.src = avatar;
-  imgElement.alt = name;
-  textElement.textContent = message;
+  image.src = avatar;
+  image.alt = name;
+  textContainer.textContent = message;
 
   return newComment;
 };

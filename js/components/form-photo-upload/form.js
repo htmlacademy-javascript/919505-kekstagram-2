@@ -5,19 +5,19 @@ import {postFormData} from '../../api.js';
 import {openModal} from '../modals/photo-upload-result.js';
 import {KeyCode, ModalType, SubmitButtonText, IMAGE_TYPES} from '../../const.js';
 
-const form = document.querySelector('.img-upload__form');
-const imgUploadInput = form.querySelector('.img-upload__input');
-const hashtagsInput = form.querySelector('.text__hashtags');
-const descriptionInput = form.querySelector('.text__description');
-const imgUploadOverlay = form.querySelector('.img-upload__overlay');
-const imgUploadCloseButton = form.querySelector('.img-upload__cancel');
-const imgPreview = form.querySelector('.img-upload__preview img');
-const submitButton = form.querySelector('.img-upload__submit');
+const formElement = document.querySelector('.img-upload__form');
+const imgUploadInputElement = formElement.querySelector('.img-upload__input');
+const hashtagsInputElement = formElement.querySelector('.text__hashtags');
+const descriptionInputElement = formElement.querySelector('.text__description');
+const imgUploadOverlayElement = formElement.querySelector('.img-upload__overlay');
+const imgUploadCloseButtonElement = formElement.querySelector('.img-upload__cancel');
+const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
+const submitButtonElement = formElement.querySelector('.img-upload__submit');
 
 /**
  * @type {Function}
  */
-const validateForm = initFromValidator(form, hashtagsInput, descriptionInput);
+const validateForm = initFromValidator(formElement, hashtagsInputElement, descriptionInputElement);
 
 const closeButtonHandler = () => {
   closeForm();
@@ -41,31 +41,31 @@ function closeForm () {
   resetEffectFilter();
   removeErrors();
 
-  imgUploadOverlay.classList.add('hidden');
+  imgUploadOverlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', keydownHandler);
 
-  imgUploadInput.value = '';
-  hashtagsInput.value = '';
-  descriptionInput.value = '';
+  imgUploadInputElement.value = '';
+  hashtagsInputElement.value = '';
+  descriptionInputElement.value = '';
 
   validateForm();
 }
 
 const openForm = () => {
-  imgUploadOverlay.classList.remove('hidden');
+  imgUploadOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', keydownHandler);
 };
 
 const imgUploadHandler = () => {
-  const file = imgUploadInput.files[0];
+  const file = imgUploadInputElement.files[0];
   const fileName = file.name.toLowerCase();
   const matches = IMAGE_TYPES.some((type) => fileName.endsWith(type));
 
   if (matches) {
-    imgPreview.src = URL.createObjectURL(file);
-    changeEffectPreviews(imgPreview.src);
+    imgPreviewElement.src = URL.createObjectURL(file);
+    changeEffectPreviews(imgPreviewElement.src);
     openForm();
   }
 };
@@ -80,12 +80,12 @@ const handleErrorUploading = () => {
 };
 
 const setSubmitButtonDisabled = (flag) => {
-  submitButton.disabled = flag;
+  submitButtonElement.disabled = flag;
 
   if (flag) {
-    submitButton.textContent = SubmitButtonText.LOADING;
+    submitButtonElement.textContent = SubmitButtonText.LOADING;
   } else {
-    submitButton.textContent = SubmitButtonText.IDLE;
+    submitButtonElement.textContent = SubmitButtonText.IDLE;
   }
 };
 
@@ -94,18 +94,18 @@ const formSubmitHandler = (evt) => {
   const isFormValid = validateForm();
   if (isFormValid) {
     removeErrors();
-    const formData = new FormData(form);
+    const formData = new FormData(formElement);
     void postFormData(formData, handleSuccessfulUploading, handleErrorUploading, setSubmitButtonDisabled);
   }
 };
 
 export const initUploadForm = () => {
-  initEffectFilter(form, imgPreview);
-  initImageResize(form, imgPreview);
+  initEffectFilter(formElement, imgPreviewElement);
+  initImageResize(formElement, imgPreviewElement);
 
-  imgUploadInput.addEventListener('change', imgUploadHandler);
-  imgUploadCloseButton.addEventListener('click', closeButtonHandler);
-  hashtagsInput.addEventListener('keydown', inputKeydownHandler);
-  descriptionInput.addEventListener('keydown', inputKeydownHandler);
-  submitButton.addEventListener('click', formSubmitHandler);
+  imgUploadInputElement.addEventListener('change', imgUploadHandler);
+  imgUploadCloseButtonElement.addEventListener('click', closeButtonHandler);
+  hashtagsInputElement.addEventListener('keydown', inputKeydownHandler);
+  descriptionInputElement.addEventListener('keydown', inputKeydownHandler);
+  submitButtonElement.addEventListener('click', formSubmitHandler);
 };
