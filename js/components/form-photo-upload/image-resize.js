@@ -29,7 +29,10 @@ const increaseScaleHandler = () => {
   }
 };
 
-export const resetImgScale = () => changeImgScale(ImgScaleConfig.INITIAL_SCALE);
+export const resetImgScale = () => {
+  currentScale = ImgScaleConfig.INITIAL_SCALE;
+  changeImgScale(currentScale);
+};
 
 export const initImageResize = (formElem, imgPreviewElem) => {
   form = formElem;

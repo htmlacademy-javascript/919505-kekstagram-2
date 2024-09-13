@@ -6,18 +6,18 @@ const getRandomIntegerFromRange = (a, b) => {
 };
 
 export const getRandomElementsFromArray = (array, quantity) => {
-  const result = [];
+  const randomElements = [];
 
   for (let i = 0; i < quantity; i++) {
     let randomIndex = getRandomIntegerFromRange(0, array.length - 1);
 
-    while (result.includes(array[randomIndex])) {
+    while (randomElements.includes(array[randomIndex])) {
       randomIndex = getRandomIntegerFromRange(0, array.length - 1);
     }
-    result.push(array[randomIndex]);
+    randomElements.push(array[randomIndex]);
   }
 
-  return result;
+  return randomElements;
 };
 
 export const debounce = (callback, timeoutDelay) => {
