@@ -3,7 +3,6 @@ import {KeyCode} from '../../const.js';
 let modalElement = null;
 
 const keydownHandler = (evt) => {
-  evt.stopPropagation();
   if (evt.key === KeyCode.ESC) {
     closeModal();
   }
