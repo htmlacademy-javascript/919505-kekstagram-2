@@ -30,9 +30,9 @@ export const openModal = (modalType) => {
   document.body.appendChild(clonedModal);
 
   modalElement = document.querySelector(`.${modalType}`);
-  const closeElement = modalElement.querySelector(`.${modalType}__button`);
+  const modalCloseElement = modalElement.querySelector(`.${modalType}__button`);
 
-  closeElement.addEventListener('click', closeButtonHandler);
+  modalCloseElement.addEventListener('click', closeButtonHandler);
   modalElement.addEventListener('click', modalClickHandler);
   document.addEventListener('keydown', keydownHandler);
 };

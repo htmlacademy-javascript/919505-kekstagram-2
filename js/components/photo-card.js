@@ -2,7 +2,7 @@ import {initComments, closeComments} from './comment-list.js';
 import {KeyCode} from '../const.js';
 
 const photoCardElement = document.querySelector('.big-picture');
-const closeElement = photoCardElement.querySelector('.big-picture__cancel');
+const cardCloseElement = photoCardElement.querySelector('.big-picture__cancel');
 const imageElement = photoCardElement.querySelector('.big-picture__img img');
 const likesElement = photoCardElement.querySelector('.likes-count');
 const captionElement = photoCardElement.querySelector('.social__caption');
@@ -48,6 +48,6 @@ const openPhotoCard = (data) => {
 };
 
 export const initPhotoCard = () => {
-  closeElement.addEventListener('click', closeButtonHandler);
+  cardCloseElement.addEventListener('click', closeButtonHandler);
   return openPhotoCard;
 };
