@@ -5,16 +5,16 @@ const getRandomIntegerFromRange = (a, b) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const getRandomElementsFromArray = (array, quantity) => {
+export const getRandomElementsFromArray = (elements, quantity) => {
   const randomElements = [];
 
   for (let i = 0; i < quantity; i++) {
-    let randomIndex = getRandomIntegerFromRange(0, array.length - 1);
+    let randomIndex = getRandomIntegerFromRange(0, elements.length - 1);
 
-    while (randomElements.includes(array[randomIndex])) {
-      randomIndex = getRandomIntegerFromRange(0, array.length - 1);
+    while (randomElements.includes(elements[randomIndex])) {
+      randomIndex = getRandomIntegerFromRange(0, elements.length - 1);
     }
-    randomElements.push(array[randomIndex]);
+    randomElements.push(elements[randomIndex]);
   }
 
   return randomElements;
